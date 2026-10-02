@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ゲームタイトル 特設サイト</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- タイトル用 Cinzel / おしゃれ和文用 Shippori Mincho / 本文用 Zen Kaku Gothic New -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Shippori+Mincho:wght@600;700;800&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ローディング画面（一文字ずつ表示されるアニメーション） -->
+<div class="loading-screen" id="loading-screen">
+  <div class="loading-text" id="loading-text">
+    <span style="--i:0">l</span><span style="--i:1">o</span><span style="--i:2">a</span><span style="--i:3">d</span><span style="--i:4">i</span><span style="--i:5">n</span><span style="--i:6">g</span><span style="--i:7">…</span>
+  </div>
+</div>
+
+<!-- 固定ヘッダー -->
+<header class="fixed-header">
+  <a href="#top" class="header-logo">
+    <img src="images/titlerogo.webp" alt="タイトルロゴ" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <span class="logo-fallback" style="display:none;">TITLE</span>
+  </a>
+  
+  <button class="menu-btn" id="menu-btn" aria-label="メニューを開く">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- 全画面ナビゲーション -->
+<nav class="full-nav" id="full-nav" hidden>
+  <ul class="nav-list">
+    <li><a href="#top" class="nav-link">TOP</a></li>
+    <li><a href="#intro-sec" class="nav-link">INTRODUCTION</a></li>
+    <li><a href="#chara-sec" class="nav-link">CHARACTER</a></li>
+    <li><a href="#endcard-sec" class="nav-link">END CARD</a></li>
+  </ul>
+</nav>
+
+<!-- ================= トップページ ================= -->
+<main class="top-page" id="top">
+  <!-- トップ画像（下部ぼかしグラデーション付き） -->
+  <div class="top-hero">
+    <img src="images/top.webp" alt="メインビジュアル" onerror="this.parentElement.style.display='none';">
+  </div>
+
+  <div class="top-body">
+    <!-- INTRODUCTION セクション -->
+    <section class="sec-intro" id="intro-sec">
+      <div class="intro-outer-box">
+        <h2 class="section-title title-in-box">INTRODUCTION</h2>
+        <p class="intro-text">ここにゲームと世界観の短い紹介文を書きます。天界を舞台とした幻想的な物語と、登場人物たちが織りなす運命の記録。</p>
+      </div>
+
+      <!-- ダイヤ型装飾（重ならず接する配置 / きらりん点滅） -->
+      <div class="diamond-decor">
+        <span class="d-item d-purple p1"></span>
+        <span class="d-item d-beige p2"></span>
+        <span class="d-item d-purple p3"></span>
+        <span class="d-item d-beige p4"></span>
+        <div class="icon-wrap">
+          <img src="images/icon.webp" alt="アイコン" onerror="this.style.display='none'">
+        </div>
+        <span class="d-item d-beige p4"></span>
+        <span class="d-item d-purple p3"></span>
+        <span class="d-item d-beige p2"></span>
+        <span class="d-item d-purple p1"></span>
+      </div>
+    </section>
+
+    <!-- CHARACTER セクション -->
+    <section class="sec-chara" id="chara-sec">
+      <h2 class="section-title">CHARACTER</h2>
+      <ul class="chara-grid-2col" id="chara-grid"></ul>
+    </section>
+
+    <!-- END CARD セクション -->
+    <section class="sec-endcard" id="endcard-sec">
+      <h2 class="section-title">END CARD</h2>
+      <ul class="endcard-list" id="endcard-grid"></ul>
+    </section>
+  </div>
+</main>
+
+<!-- ================= キャラ詳細ページ ================= -->
+<article class="detail-page" id="detail" hidden>
+  <div class="detail-container">
+    <!-- 立ち絵表示エリア -->
+    <div class="stage" id="stage">
+      <button class="nav-arrow prev" id="prev-btn" aria-label="前のキャラクター">‹</button>
+      
+      <div class="art-wrap" id="art-wrap">
+        <div class="art" id="art"></div>
+        <div class="vertical-quote" id="vertical-quote"></div>
+      </div>
+
+      <button class="nav-arrow next" id="next-btn" aria-label="次のキャラクター">›</button>
+    </div>
+
+    <!-- キャラ紹介（フルネーム＋説明文） -->
+    <div class="chara-info" id="chara-info"></div>
+
+    <!-- 下部キャラ選択 -->
+    <section class="others-sec">
+      <h3 class="section-title" style="margin-top:0;">CHARACTER</h3>
+      <ul class="chara-grid-2col" id="others-grid"></ul>
+    </section>
+  </div>
+</article>
+
+<!-- ================= エンドカード詳細ページ ================= -->
+<article class="end-detail-page" id="end-detail" hidden>
+  <div class="end-detail-container">
+    <!-- メインコンテンツ表示エリア（左右ボタン付き） -->
+    <div class="end-card-stage">
+      <button class="end-nav-arrow prev" id="end-prev-btn" aria-label="前のエンドカード">‹</button>
+      
+      <div class="end-detail-content" id="end-detail-content">
+        <!-- JSでここに「タイトル → 文章 → 画像」の順で出力されます -->
+      </div>
+
+      <button class="end-nav-arrow next" id="end-next-btn" aria-label="次のエンドカード">›</button>
+    </div>
+
+    <!-- 下部：他のエンドカード一覧 -->
+    <section class="others-end-sec">
+      <h3 class="section-title end-sec-title">END CARD</h3>
+      <ul class="endcard-list" id="others-end-grid"></ul>
+    </section>
+  </div>
+</article>
+
+<!-- フッター -->
+<footer class="site-footer">
+  <p class="credit">制作 カイシゼミ14期生</p>
+  <div class="sns-links">
+    <a href="#" class="twitter-btn" aria-label="Twitter">
+      <img src="images/twitter-icon.png" alt="Twitter" onerror="this.parentElement.innerHTML='X';">
+    </a>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

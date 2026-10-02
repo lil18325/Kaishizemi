@@ -1,0 +1,533 @@
+:root {
+  --bg-main: #ffffff;
+  --c-purple: #4e3b5d;
+  --c-lavender: #d4c3dd;
+  --c-beige: #ebe9d6;
+  --font-title: 'Cinzel', serif;
+  --font-fashion: 'Shippori Mincho', 'Yu Mincho', serif;
+  --sans: 'Zen Kaku Gothic New', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body {
+  width: 100%;
+  overflow-x: hidden; /* 右見切れ・横スクロールの徹底防止 */
+  background: var(--bg-main);
+  color: var(--c-purple);
+  font-family: var(--sans);
+  font-weight: 500;
+}
+a { color: inherit; text-decoration: none; }
+[hidden] { display: none !important; }
+
+/* ================= ローディング画面（一文字ずつ表示） ================= */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s;
+}
+.loading-screen.is-loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loading-text {
+  font-family: var(--font-title) !important;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--c-purple);
+  letter-spacing: 0.12em;
+  display: flex;
+}
+.loading-text span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: charFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: calc(var(--i) * 0.08s);
+}
+
+@keyframes charFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= 固定ヘッダー & ハンバーガー ================= */
+.fixed-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 76px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  pointer-events: none;
+  width: 100%;
+}
+.header-logo, .menu-btn { pointer-events: auto; }
+
+.header-logo img { height: 68px; width: auto; object-fit: contain; }
+.logo-fallback { font-family: var(--font-fashion); font-weight: 800; font-size: 1.6rem; color: var(--c-purple); }
+
+/* ハンバーガー（通常時：紫背景） */
+.menu-btn {
+  width: 46px; height: 46px;
+  background: var(--c-purple);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  flex-shrink: 0;
+}
+.menu-btn span {
+  width: 22px; height: 3px;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s, background 0.3s;
+}
+
+/* ハンバーガー（アクティブ時：白背景・縁色なし） */
+.menu-btn.is-active {
+  background: #ffffff !important;
+  border: none !important; /* 丸枠の縁色消去 */
+}
+.menu-btn.is-active span {
+  background: var(--c-purple) !important;
+}
+.menu-btn.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.menu-btn.is-active span:nth-child(2) { opacity: 0; }
+.menu-btn.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* 全画面ナビ */
+.full-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--c-beige);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-list { list-style: none; text-align: center; }
+.nav-list li { margin: 2rem 0; }
+.nav-link {
+  font-family: var(--font-title) !important;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--c-purple);
+  letter-spacing: 0.15em;
+  padding-bottom: 6px;
+}
+
+/* ================= セクションタイトル（Cinzelフォント強制適用） ================= */
+.section-title {
+  font-family: var(--font-title) !important;
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: #4e3b5d;
+  margin: 0 0 1.8rem 0;
+}
+
+.section-title.title-in-box {
+  margin-bottom: 1.2rem;
+  font-size: 1.7rem;
+}
+
+.sec-intro, .sec-chara, .sec-endcard { margin-top: 5rem; }
+
+/* ================= トップページ ================= */
+.top-hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.top-hero img { width: 100%; height: auto; display: block; }
+.top-hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 25%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
+  pointer-events: none;
+}
+
+.top-body { max-width: 600px; margin: 0 auto; padding: 0 16px 60px; }
+
+/* INTRODUCTION (おしゃれな明朝フォント適用) */
+.intro-outer-box {
+  border: 2px solid var(--c-purple);
+  padding: 2rem 1.4rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.88);
+}
+.intro-text {
+  font-family: var(--font-fashion); /* オシャレな明朝フォント */
+  line-height: 2.1;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: justify;
+  letter-spacing: 0.04em;
+}
+
+/* ダイヤ型装飾（重ならず左右で接する配置） */
+.diamond-decor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 3.2rem auto 1.5rem;
+  padding: 0 20px;
+}
+.d-item {
+  width: 12px; height: 12px;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  margin: 0 2.5px; /* ちょうど角が接する絶妙な配置 */
+  animation: flashSeq 2.8s infinite ease-in-out;
+}
+.d-purple { background: var(--c-purple); }
+.d-beige { background: var(--c-lavender); }
+
+.p1 { animation-delay: 0s; }
+.p2 { animation-delay: 0.2s; }
+.p3 { animation-delay: 0.4s; }
+.p4 { animation-delay: 0.6s; }
+
+@keyframes flashSeq {
+  0%, 100% { opacity: 1; transform: rotate(45deg) scale(1); }
+  20% { opacity: 0.15; transform: rotate(45deg) scale(0.5); }
+  40% { opacity: 1; transform: rotate(45deg) scale(1); }
+}
+
+.icon-wrap {
+  width: 40px; height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 12px;
+  flex-shrink: 0;
+}
+.icon-wrap img { width: 100%; height: 100%; object-fit: contain; }
+
+/* キャラクターカード (画像アップ表示 & おしゃれな名前) */
+.chara-grid-2col {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px 16px;
+}
+.chara-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+.chara-thumb-oval {
+  width: 100%;
+  aspect-ratio: 1.25 / 1;
+  border-radius: 999px;
+  border: none;
+  overflow: hidden;
+  background: var(--c-beige);
+  box-shadow: 0 4px 12px rgba(78, 59, 93, 0.15);
+}
+.chara-thumb-oval img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transform: scale(2.0); /* ガッツリ大きく表示 */
+}
+.chara-name {
+  margin-top: 14px;
+  font-family: var(--font-fashion); /* おしゃれなフォント */
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--c-purple);
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+/* エンドカード一覧 */
+.endcard-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.endcard-item {
+  border: 2px solid var(--c-purple);
+  padding: 1.1rem 1.4rem;
+  border-radius: 8px;
+  background: var(--c-beige);
+  font-family: var(--font-fashion);
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.endcard-item::after { content: "›"; font-size: 1.4rem; }
+
+/* ================= キャラ詳細ページ ================= */
+.detail-page {
+  min-height: 100svh;
+  padding-top: 80px;
+  padding-bottom: 60px;
+  width: 100%;
+  overflow-x: hidden;
+}
+.detail-container { max-width: 500px; margin: 0 auto; padding: 0 12px; }
+
+/* 立ち絵エリア（高さを拡大） */
+.stage {
+  position: relative;
+  height: 78svh; /* 立ち絵をさらに大きく表示 */
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+/* 左右ナビゲーションボタン（画面両端固定でセリフと絶対に被らない） */
+.nav-arrow {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  z-index: 30; /* 最前面 */
+  background: transparent;
+  border: none;
+  color: var(--c-purple);
+  font-size: 3.2rem;
+  font-weight: 300;
+  cursor: pointer;
+  padding: 0 8px;
+  line-height: 1;
+  user-select: none;
+}
+.nav-arrow.prev { left: 0; }
+.nav-arrow.next { right: 0; }
+
+.art-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+/* 立ち絵画像（大幅拡大） */
+.art {
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+.art img {
+  max-height: 76svh; /* 大きく表示 */
+  width: auto;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 10px 20px rgba(78, 59, 93, 0.25));
+}
+
+/* style.css */
+
+/* 1. アニメーションの秒数とイージングの調整 */
+.art.float-anim {
+  /* 0.65s から 1.2s（または1.4s）に伸ばし、ふわっと減速するイージングに変更 */
+  animation: charaFloatUp 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* 2. 出現時の動き（移動量と透明度） */
+@keyframes charaFloatUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px); /* 出現位置を少し浅め（25px）にするとより上品で自然なふわっと感になります */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 縦書きセリフ（ボタンと絶対被らないよう内側に配置＆おしゃれフォント） */
+.vertical-quote {
+  position: absolute;
+  top: 10px;
+  right: 42px; /* 左右ボタンの内側に配置し被りを完全防止 */
+  writing-mode: vertical-rl;
+  font-family: var(--font-fashion); /* おしゃれフォント */
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--c-beige);
+  background: rgba(78, 59, 93, 0.92);
+  padding: 20px 14px;
+  border-radius: 6px;
+  letter-spacing: 0.2em;
+  line-height: 1.6;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  z-index: 10;
+  max-height: 65%;
+  overflow: hidden;
+}
+
+/* キャラ紹介文（フルネーム＋おしゃれフォント） */
+.chara-info {
+  margin-top: 1.8rem;
+  padding: 0 8px;
+}
+/* style.css */
+
+/* 1. 名前の下の余白を少し詰める（0.8rem → 0.2rem に変更） */
+.detail-chara-name {
+  font-family: var(--font-fashion);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--c-purple);
+  margin-bottom: 0.2rem; /* ← ここを少し詰めます */
+  letter-spacing: 0.08em;
+}
+
+/* 2. kana のスタイルを新規追加 */
+.detail-chara-kana {
+  display: block;
+  font-family: var(--font-title); /* アルファベット用にタイトル用フォント(Cinzel)を使うと馴染みます */
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--c-purple);
+  opacity: 0.75;                 /* 少し薄めにして上品に */
+  margin-bottom: 1.2rem;         /* 説明文との間の余白 */
+  letter-spacing: 0.12em;
+}
+
+.detail-chara-desc {
+  font-family: var(--font-fashion); /* おしゃれフォント */
+  line-height: 2.1;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--c-purple);
+  text-align: justify;
+}
+
+.others-sec { margin-top: 4rem; padding-top: 2.5rem; border-top: 1.5px solid var(--c-lavender); }
+
+/* ================= エンドカード詳細 ================= */
+/* ================= エンドカード詳細 ================= */
+.end-detail-page {
+  min-height: 100svh;
+  background: var(--c-purple);
+  color: var(--c-beige);
+  padding: 80px 16px 60px;
+  width: 100%;
+  overflow-x: hidden;
+}
+.end-detail-container {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ステージ（左右ボタン配置用） */
+.end-card-stage {
+  position: relative;
+  width: 100%;
+}
+
+/* 左右ナビゲーションボタン */
+.end-nav-arrow {
+  position: absolute;
+  top: 180px; /* 位置の高さ調整 */
+  z-index: 30;
+  background: transparent;
+  border: none;
+  color: var(--c-beige); /* 紫背景なのでベージュ色 */
+  font-size: 3.2rem;
+  font-weight: 300;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  user-select: none;
+}
+.end-nav-arrow.prev { left: -10px; }
+.end-nav-arrow.next { right: -10px; }
+
+/* コンテンツ内部 */
+.end-detail-content {
+  padding: 0 32px; /* 左右ボタンと被らない余白 */
+}
+
+/* 1. 上：エンドタイトル */
+.end-title {
+  font-family: var(--font-fashion);
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--c-beige);
+  letter-spacing: 0.08em;
+}
+
+/* 2. 中：文章（Enter改行が反映される設定） */
+.end-text {
+  font-family: var(--font-fashion);
+  line-height: 2.1;
+  font-size: 0.98rem;
+  font-weight: 600;
+  text-align: justify;
+  margin-bottom: 2.5rem;
+  color: var(--c-beige);
+  white-space: pre-wrap; /* Enter改行を反映 */
+  letter-spacing: 0.04em;
+}
+
+/* 3. 下：画像 */
+.end-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid var(--c-lavender);
+  display: block;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* 下部他エンドカード一覧エリア */
+.others-end-sec {
+  margin-top: 4rem;
+  padding-top: 2.5rem;
+  border-top: 1.5px solid rgba(212, 195, 221, 0.3);
+}
+
+.end-sec-title {
+  color: var(--c-beige) !important;
+  -webkit-text-stroke: 1.8px var(--c-lavender) !important;
+}
+
+/* 詳細ページ用のエンドカードリスト表示調整 */
+.others-end-sec .endcard-item {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--c-beige);
+  border-color: var(--c-lavender);
+}
+
+/* ================= フッター ================= */
+.site-footer {
+  text-align: center;
+  padding: 30px 16px 40px;
+  border-top: 1.5px solid var(--c-lavender);
+  margin-top: 4rem;
+}
+.credit { font-family: var(--font-fashion); font-size: 0.9rem; font-weight: 900; color: var(--c-purple); margin-bottom: 12px; }
+.twitter-btn { display: inline-block; width: 36px; height: 36px; }
+.twitter-btn img { width: 100%; height: 100%; object-fit: contain; }
