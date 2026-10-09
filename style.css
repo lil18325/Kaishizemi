@@ -3,7 +3,7 @@
   --c-purple: #4e3b5d;
   --c-lavender: #d4c3dd;
   --c-beige: #ebe9d6;
-  --font-title: 'Cinzel', serif;
+  --font-title: 'vdl-kuromincho', serif; /* 黒明朝 */
   --font-fashion: 'Shippori Mincho', 'Yu Mincho', serif;
   --sans: 'Zen Kaku Gothic New', sans-serif;
 }
@@ -71,7 +71,21 @@ a { color: inherit; text-decoration: none; }
   padding: 0 16px;
   pointer-events: none;
   width: 100%;
+
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
+
+.fixed-header.is-hidden {
+  opacity: 0;
+  transform: translateY(-10px); /* 少し上に移動しながら消える */
+  pointer-events: none !important;
+}
+
+.fixed-header.is-hidden .header-logo,
+.fixed-header.is-hidden .menu-btn {
+  pointer-events: none !important;
+}
+
 .header-logo, .menu-btn { pointer-events: auto; }
 
 .header-logo img { height: 68px; width: auto; object-fit: contain; }
@@ -80,7 +94,7 @@ a { color: inherit; text-decoration: none; }
 /* ハンバーガー（通常時：紫背景） */
 .menu-btn {
   width: 46px; height: 46px;
-  background: var(--c-purple);
+  background: #ffffff;
   border: none;
   border-radius: 50%;
   display: flex;
@@ -89,23 +103,23 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   gap: 5px;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  transition: background-color 0.3s, transform 0.2s;
   flex-shrink: 0;
 }
 .menu-btn span {
   width: 22px; height: 3px;
-  background: #ffffff;
+  background: var(--c-purple);
   border-radius: 2px;
-  transition: transform 0.3s, opacity 0.3s, background 0.3s;
+  transition: transform 0.3s, opacity 0.3s, background-color0.3s;
 }
 
-/* ハンバーガー（アクティブ時：白背景・縁色なし） */
+/* ハンバーガー（アクティブ時 */
 .menu-btn.is-active {
-  background: #ffffff !important;
-  border: none !important; /* 丸枠の縁色消去 */
+  background: var(--c-purple); /* 紫背景 */
 }
+
 .menu-btn.is-active span {
-  background: var(--c-purple) !important;
+  background: #ffffff;         /* 白の線 */
 }
 .menu-btn.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .menu-btn.is-active span:nth-child(2) { opacity: 0; }
@@ -124,7 +138,7 @@ a { color: inherit; text-decoration: none; }
 .nav-list { list-style: none; text-align: center; }
 .nav-list li { margin: 2rem 0; }
 .nav-link {
-  font-family: var(--font-title) !important;
+  font-family: var(--font-fashion);
   font-size: 2rem;
   font-weight: 800;
   color: var(--c-purple);
@@ -136,7 +150,7 @@ a { color: inherit; text-decoration: none; }
 .section-title {
   font-family: var(--font-title) !important;
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 500;
   text-align: center;
   letter-spacing: 0.12em;
   color: #4e3b5d;
@@ -154,7 +168,7 @@ a { color: inherit; text-decoration: none; }
 .top-hero {
   position: relative;
   width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .top-hero img { width: 100%; height: auto; display: block; }
 .top-hero::after {
@@ -164,6 +178,41 @@ a { color: inherit; text-decoration: none; }
   height: 25%;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
   pointer-events: none;
+  z-index: 1;
+}
+
+/* style.css のトップページ部分 */
+
+.hero-logo-wrap {
+  position: absolute;
+  bottom: -15px;       /* 下への重なり具合 */
+  left: 50%;
+  width: 75%;          
+  max-width: 320px;    
+  z-index: 10;         
+
+  /* ▼ 初期状態（非表示・少し下） */
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  pointer-events: none;
+
+  /* ▼ 表示・非表示の滑らかなアニメーション設定 */
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* ▼ 少しスクロールして表示された状態 */
+.hero-logo-wrap.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.hero-logo {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* 背景になじませつつ浮き立たせる影（不要なら削除OK） */
+  filter: drop-shadow(0 4px 10px rgba(78, 59, 93, 0.25));
 }
 
 .top-body { max-width: 600px; margin: 0 auto; padding: 0 16px 60px; }
@@ -395,7 +444,7 @@ a { color: inherit; text-decoration: none; }
 .detail-chara-name {
   font-family: var(--font-fashion);
   font-size: 1.6rem;
-  font-weight: 800;
+  font-weight: 500;
   color: var(--c-purple);
   margin-bottom: 0.2rem; /* ← ここを少し詰めます */
   letter-spacing: 0.08em;
@@ -425,7 +474,6 @@ a { color: inherit; text-decoration: none; }
 .others-sec { margin-top: 4rem; padding-top: 2.5rem; border-top: 1.5px solid var(--c-lavender); }
 
 /* ================= エンドカード詳細 ================= */
-/* ================= エンドカード詳細 ================= */
 .end-detail-page {
   min-height: 100svh;
   background: var(--c-purple);
@@ -447,21 +495,22 @@ a { color: inherit; text-decoration: none; }
 
 /* 左右ナビゲーションボタン */
 .end-nav-arrow {
-  position: absolute;
-  top: 180px; /* 位置の高さ調整 */
-  z-index: 30;
+  position: fixed; /* absolute から fixed に変更して画面固定 */
+  top: 50%;        /* 画面の縦中央 */
+  transform: translateY(-50%);
+  z-index: 100;    /* 常に一番前に表示 */
   background: transparent;
   border: none;
-  color: var(--c-beige); /* 紫背景なのでベージュ色 */
+  color: var(--c-beige);
   font-size: 3.2rem;
   font-weight: 300;
   cursor: pointer;
-  padding: 0 4px;
+  padding: 10px 6px;
   line-height: 1;
   user-select: none;
 }
-.end-nav-arrow.prev { left: -10px; }
-.end-nav-arrow.next { right: -10px; }
+.end-nav-arrow.prev { left: 4px; }
+.end-nav-arrow.next { right: 4px; }
 
 /* コンテンツ内部 */
 .end-detail-content {
@@ -470,13 +519,18 @@ a { color: inherit; text-decoration: none; }
 
 /* 1. 上：エンドタイトル */
 .end-title {
-  font-family: var(--font-fashion);
-  font-size: 1.8rem;
-  font-weight: 800;
+  font-family: var(--font-title); /* --font-fashion から --font-title に変更 */
+  font-size: 1.5rem;
+  font-weight: 500;
   text-align: center;
   margin-bottom: 2rem;
   color: var(--c-beige);
   letter-spacing: 0.08em;
+  line-height: 1.4;
+  
+  white-space: pre-wrap;          /* data.jsでのEnter改行を反映 */
+  word-break: keep-all;           /* 単語の途中で変な改行が起きるのを防ぐ */
+  overflow-wrap: break-word;
 }
 
 /* 2. 中：文章（Enter改行が反映される設定） */
@@ -511,7 +565,8 @@ a { color: inherit; text-decoration: none; }
 
 .end-sec-title {
   color: var(--c-beige) !important;
-  -webkit-text-stroke: 1.8px var(--c-lavender) !important;
+  -webkit-text-stroke: none !important;
+  text-shadow: none !important;
 }
 
 /* 詳細ページ用のエンドカードリスト表示調整 */
@@ -531,3 +586,4 @@ a { color: inherit; text-decoration: none; }
 .credit { font-family: var(--font-fashion); font-size: 0.9rem; font-weight: 900; color: var(--c-purple); margin-bottom: 12px; }
 .twitter-btn { display: inline-block; width: 36px; height: 36px; }
 .twitter-btn img { width: 100%; height: 100%; object-fit: contain; }
+

@@ -197,3 +197,46 @@ function route() {
 
 addEventListener("hashchange", route);
 route();
+
+/* ---------- 8. スクロール監視（ヘッダー ＆ キービジュロゴの制御） ---------- */
+const header = document.querySelector(".fixed-header");
+const topHero = document.querySelector(".top-hero");
+const heroLogo = document.querySelector(".hero-logo-wrap");
+
+function handleScrollEffects() {
+  const hash = location.hash;
+  const isTopPage = !hash || hash === "#top" || hash === "#intro-sec" || hash === "#chara-sec" || hash === "#endcard-sec";
+  const menuBtn = $("menu-btn");
+  const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+  /* --- A. キービジュロゴの表示制御（少しスクロールしたら浮き出る） --- */
+  if (heroLogo) {
+    if (isTopPage && scrollY > 40) { // 40px以上スクロールしたら表示
+      heroLogo.classList.add("is-visible");
+    } else {
+      heroLogo.classList.remove("is-visible");
+    }
+  }
+
+  /* --- B. 固定ヘッダーの表示制御 --- */
+  if (menuBtn && menuBtn.classList.contains("is-active")) {
+    header.classList.remove("is-hidden");
+    return;
+  }
+
+  if (isTopPage && topHero) {
+    const heroBottom = topHero.getBoundingClientRect().bottom;
+    if (heroBottom > 100) {
+      header.classList.add("is-hidden");
+    } else {
+      header.classList.remove("is-hidden");
+    }
+  } else {
+    header.classList.remove("is-hidden");
+  }
+}
+
+// イベント登録
+window.addEventListener("scroll", handleScrollEffects, { passive: true });
+window.addEventListener("hashchange", handleScrollEffects);
+window.addEventListener("load", handleScrollEffects);
