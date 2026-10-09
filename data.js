@@ -17,7 +17,7 @@
       name: "ローベルト・ヴィンター",
       shortName: "ローベルト",
       kana: "Robert Winter",
-      fullImg: "images/Robert1.webp",
+      fullImg: "images/robert1.webp",
       quote: "「皆で頑張るぞ！より良い世界のために！」",
       desc: "天界入境審査庁の幹部天使。<br>ハッピー計画に賛同している。位の高い貴族家出身。まっすぐで純粋な思想を持つ。審査庁の顔役で有名人。"
     },
