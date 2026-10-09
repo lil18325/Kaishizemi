@@ -3,7 +3,7 @@
   --c-purple: #4e3b5d;
   --c-lavender: #d4c3dd;
   --c-beige: #ebe9d6;
-  --font-title: 'vdl-kuromincho', serif; /* 黒明朝 */
+  --font-title: 'vdl-kuromincho', serif;
   --font-fashion: 'Shippori Mincho', 'Yu Mincho', serif;
   --sans: 'Zen Kaku Gothic New', sans-serif;
 }
@@ -11,7 +11,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body {
   width: 100%;
-  overflow-x: hidden; /* 右見切れ・横スクロールの徹底防止 */
+  overflow-x: hidden;
   background: var(--bg-main);
   color: var(--c-purple);
   font-family: var(--sans);
@@ -20,7 +20,7 @@ html, body {
 a { color: inherit; text-decoration: none; }
 [hidden] { display: none !important; }
 
-/* ================= ローディング画面（一文字ずつ表示） ================= */
+/* ================= ローディング画面 ================= */
 .loading-screen {
   position: fixed;
   inset: 0;
@@ -71,13 +71,12 @@ a { color: inherit; text-decoration: none; }
   padding: 0 16px;
   pointer-events: none;
   width: 100%;
-
   transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 .fixed-header.is-hidden {
   opacity: 0;
-  transform: translateY(-10px); /* 少し上に移動しながら消える */
+  transform: translateY(-10px);
   pointer-events: none !important;
 }
 
@@ -87,11 +86,9 @@ a { color: inherit; text-decoration: none; }
 }
 
 .header-logo, .menu-btn { pointer-events: auto; }
-
 .header-logo img { height: 68px; width: auto; object-fit: contain; }
 .logo-fallback { font-family: var(--font-fashion); font-weight: 800; font-size: 1.6rem; color: var(--c-purple); }
 
-/* ハンバーガー（通常時：紫背景） */
 .menu-btn {
   width: 46px; height: 46px;
   background: #ffffff;
@@ -110,22 +107,19 @@ a { color: inherit; text-decoration: none; }
   width: 22px; height: 3px;
   background: var(--c-purple);
   border-radius: 2px;
-  transition: transform 0.3s, opacity 0.3s, background-color0.3s;
+  transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
 }
 
-/* ハンバーガー（アクティブ時 */
 .menu-btn.is-active {
-  background: var(--c-purple); /* 紫背景 */
+  background: var(--c-purple);
 }
-
 .menu-btn.is-active span {
-  background: #ffffff;         /* 白の線 */
+  background: #ffffff;
 }
 .menu-btn.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .menu-btn.is-active span:nth-child(2) { opacity: 0; }
 .menu-btn.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-/* 全画面ナビ */
 .full-nav {
   position: fixed;
   inset: 0;
@@ -146,7 +140,6 @@ a { color: inherit; text-decoration: none; }
   padding-bottom: 6px;
 }
 
-/* ================= セクションタイトル（Cinzelフォント強制適用） ================= */
 .section-title {
   font-family: var(--font-title) !important;
   font-size: 2rem;
@@ -168,7 +161,6 @@ a { color: inherit; text-decoration: none; }
 .top-hero {
   position: relative;
   width: 100%;
-  /* overflow: hidden; */
 }
 .top-hero img { width: 100%; height: auto; display: block; }
 .top-hero::after {
@@ -181,26 +173,19 @@ a { color: inherit; text-decoration: none; }
   z-index: 1;
 }
 
-/* style.css のトップページ部分 */
-
 .hero-logo-wrap {
   position: absolute;
-  bottom: -15px;       /* 下への重なり具合 */
+  bottom: -15px;
   left: 50%;
   width: 75%;          
   max-width: 320px;    
   z-index: 10;         
-
-  /* ▼ 初期状態（非表示・少し下） */
   opacity: 0;
   transform: translate(-50%, 20px);
   pointer-events: none;
-
-  /* ▼ 表示・非表示の滑らかなアニメーション設定 */
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-/* ▼ 少しスクロールして表示された状態 */
 .hero-logo-wrap.is-visible {
   opacity: 1;
   transform: translate(-50%, 0);
@@ -211,13 +196,11 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   height: auto;
   display: block;
-  /* 背景になじませつつ浮き立たせる影（不要なら削除OK） */
   filter: drop-shadow(0 4px 10px rgba(78, 59, 93, 0.25));
 }
 
 .top-body { max-width: 600px; margin: 0 auto; padding: 0 16px 60px; }
 
-/* INTRODUCTION (おしゃれな明朝フォント適用) */
 .intro-outer-box {
   border: 2px solid var(--c-purple);
   padding: 2rem 1.4rem;
@@ -225,7 +208,7 @@ a { color: inherit; text-decoration: none; }
   background: rgba(255, 255, 255, 0.88);
 }
 .intro-text {
-  font-family: var(--font-fashion); /* オシャレな明朝フォント */
+  font-family: var(--font-fashion);
   line-height: 2.1;
   font-size: 1rem;
   font-weight: 600;
@@ -233,7 +216,6 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.04em;
 }
 
-/* ダイヤ型装飾（重ならず左右で接する配置） */
 .diamond-decor {
   display: flex;
   align-items: center;
@@ -246,7 +228,7 @@ a { color: inherit; text-decoration: none; }
   width: 12px; height: 12px;
   transform: rotate(45deg);
   flex-shrink: 0;
-  margin: 0 2.5px; /* ちょうど角が接する絶妙な配置 */
+  margin: 0 2.5px;
   animation: flashSeq 2.8s infinite ease-in-out;
 }
 .d-purple { background: var(--c-purple); }
@@ -273,7 +255,6 @@ a { color: inherit; text-decoration: none; }
 }
 .icon-wrap img { width: 100%; height: 100%; object-fit: contain; }
 
-/* キャラクターカード (画像アップ表示 & おしゃれな名前) */
 .chara-grid-2col {
   list-style: none;
   display: grid;
@@ -286,6 +267,8 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   cursor: pointer;
 }
+
+/* サムネイル（Oval枠内での絶対位置切り出し指定） */
 .chara-thumb-oval {
   width: 100%;
   aspect-ratio: 1.25 / 1;
@@ -294,16 +277,19 @@ a { color: inherit; text-decoration: none; }
   overflow: hidden;
   background: var(--c-beige);
   box-shadow: 0 4px 12px rgba(78, 59, 93, 0.15);
+  position: relative;
 }
+
 .chara-thumb-oval img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  transform: scale(2.0); /* ガッツリ大きく表示 */
+  position: absolute;
+  max-width: none;
+  height: auto;
+  display: block;
 }
+
 .chara-name {
   margin-top: 14px;
-  font-family: var(--font-fashion); /* おしゃれなフォント */
+  font-family: var(--font-fashion);
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--c-purple);
@@ -311,7 +297,6 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.05em;
 }
 
-/* エンドカード一覧 */
 .endcard-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
 .endcard-item {
   border: 2px solid var(--c-purple);
@@ -335,13 +320,14 @@ a { color: inherit; text-decoration: none; }
   padding-bottom: 60px;
   width: 100%;
   overflow-x: hidden;
+  transition: background-color 0.5s ease; /* ① スムーズな背景色切り替え */
+  color: #ffffff;
 }
 .detail-container { max-width: 500px; margin: 0 auto; padding: 0 12px; }
 
-/* 立ち絵エリア（高さを拡大） */
 .stage {
   position: relative;
-  height: 78svh; /* 立ち絵をさらに大きく表示 */
+  height: 78svh;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -349,15 +335,14 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
 }
 
-/* 左右ナビゲーションボタン（画面両端固定でセリフと絶対に被らない） */
 .nav-arrow {
   position: absolute;
   top: 45%;
   transform: translateY(-50%);
-  z-index: 30; /* 最前面 */
+  z-index: 30;
   background: transparent;
   border: none;
-  color: var(--c-purple);
+  color: #ffffff;
   font-size: 3.2rem;
   font-weight: 300;
   cursor: pointer;
@@ -377,33 +362,46 @@ a { color: inherit; text-decoration: none; }
   align-items: flex-end;
 }
 
-/* 立ち絵画像（大幅拡大） */
 .art {
+  position: relative;
   height: 100%;
   display: flex;
   align-items: flex-end;
+  justify-content: center;
 }
-.art img {
-  max-height: 76svh; /* 大きく表示 */
+
+/* ③ 背景の白透過アイコン */
+.chara-bg-icon {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: 260px;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.18; /* ほんのり透過 */
+}
+
+.chara-main-img {
+  position: relative;
+  z-index: 2;
+  max-height: 76svh;
   width: auto;
   object-fit: contain;
   object-position: bottom center;
-  filter: drop-shadow(0 10px 20px rgba(78, 59, 93, 0.25));
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.35));
 }
 
-/* style.css */
-
-/* 1. アニメーションの秒数とイージングの調整 */
 .art.float-anim {
-  /* 0.65s から 1.2s（または1.4s）に伸ばし、ふわっと減速するイージングに変更 */
   animation: charaFloatUp 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* 2. 出現時の動き（移動量と透明度） */
 @keyframes charaFloatUp {
   from {
     opacity: 0;
-    transform: translateY(25px); /* 出現位置を少し浅め（25px）にするとより上品で自然なふわっと感になります */
+    transform: translateY(25px);
   }
   to {
     opacity: 1;
@@ -411,67 +409,92 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-/* 縦書きセリフ（ボタンと絶対被らないよう内側に配置＆おしゃれフォント） */
+/* ② セリフの囲み枠（改行で独立 ＆ 列間ギャップ） */
 .vertical-quote {
   position: absolute;
   top: 10px;
-  right: 42px; /* 左右ボタンの内側に配置し被りを完全防止 */
+  right: 40px;
   writing-mode: vertical-rl;
-  font-family: var(--font-fashion); /* おしゃれフォント */
-  font-size: 1.1rem;
+  font-family: var(--font-fashion);
+  font-size: 1.05rem;
   font-weight: 700;
-  color: var(--c-beige);
-  background: rgba(78, 59, 93, 0.92);
-  padding: 20px 14px;
-  border-radius: 6px;
-  letter-spacing: 0.2em;
+  color: #ffffff;
+  letter-spacing: 0.18em;
   line-height: 1.6;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
   z-index: 10;
-  max-height: 65%;
-  overflow: hidden;
+  max-height: 68%;
+  display: flex;
+  gap: 12px; /* ★列（行）同士の隙間 */
 }
 
-/* キャラ紹介文（フルネーム＋おしゃれフォント） */
+/* style.css 内の .quote-line の指定を以下に書き換え */
+.quote-line {
+  background: rgba(0, 0, 0, 0.45); /* デフォルト色（JSの指定がない場合の予備） */
+  backdrop-filter: blur(6px);
+  padding: 16px 10px;
+  border-radius: 6px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .chara-info {
   margin-top: 1.8rem;
   padding: 0 8px;
 }
-/* style.css */
 
-/* 1. 名前の下の余白を少し詰める（0.8rem → 0.2rem に変更） */
 .detail-chara-name {
   font-family: var(--font-fashion);
   font-size: 1.6rem;
   font-weight: 500;
-  color: var(--c-purple);
-  margin-bottom: 0.2rem; /* ← ここを少し詰めます */
+  color: #ffffff;
+  margin-bottom: 0.2rem;
   letter-spacing: 0.08em;
 }
 
-/* 2. kana のスタイルを新規追加 */
 .detail-chara-kana {
   display: block;
-  font-family: var(--font-title); /* アルファベット用にタイトル用フォント(Cinzel)を使うと馴染みます */
+  font-family: var(--font-fashion);
   font-size: 0.85rem;
   font-weight: 700;
-  color: var(--c-purple);
-  opacity: 0.75;                 /* 少し薄めにして上品に */
-  margin-bottom: 1.2rem;         /* 説明文との間の余白 */
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 1.2rem;
   letter-spacing: 0.12em;
 }
 
 .detail-chara-desc {
-  font-family: var(--font-fashion); /* おしゃれフォント */
+  font-family: var(--font-fashion);
   line-height: 2.1;
   font-size: 0.98rem;
   font-weight: 600;
-  color: var(--c-purple);
+  color: rgba(255, 255, 255, 0.9);
   text-align: justify;
 }
 
-.others-sec { margin-top: 4rem; padding-top: 2.5rem; border-top: 1.5px solid var(--c-lavender); }
+/* ④ 白色カーブくびれダイヤ4つ（接着配置 ＆ 発光） */
+.diamond-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 3.5rem auto 1rem;
+}
+
+.curved-diamond {
+  width: 20px;
+  height: 20px;
+  fill: #ffffff;
+  filter: none;
+}
+
+.others-sec {
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: none;
+}
+
+.others-sec .chara-name {
+  color: #ffffff;
+}
 
 /* ================= エンドカード詳細 ================= */
 .end-detail-page {
@@ -487,18 +510,16 @@ a { color: inherit; text-decoration: none; }
   margin: 0 auto;
 }
 
-/* ステージ（左右ボタン配置用） */
 .end-card-stage {
   position: relative;
   width: 100%;
 }
 
-/* 左右ナビゲーションボタン */
 .end-nav-arrow {
-  position: fixed; /* absolute から fixed に変更して画面固定 */
-  top: 50%;        /* 画面の縦中央 */
+  position: fixed;
+  top: 50%;
   transform: translateY(-50%);
-  z-index: 100;    /* 常に一番前に表示 */
+  z-index: 100;
   background: transparent;
   border: none;
   color: var(--c-beige);
@@ -512,14 +533,12 @@ a { color: inherit; text-decoration: none; }
 .end-nav-arrow.prev { left: 4px; }
 .end-nav-arrow.next { right: 4px; }
 
-/* コンテンツ内部 */
 .end-detail-content {
-  padding: 0 32px; /* 左右ボタンと被らない余白 */
+  padding: 0 32px;
 }
 
-/* 1. 上：エンドタイトル */
 .end-title {
-  font-family: var(--font-title); /* --font-fashion から --font-title に変更 */
+  font-family: var(--font-title);
   font-size: 1.5rem;
   font-weight: 500;
   text-align: center;
@@ -527,13 +546,11 @@ a { color: inherit; text-decoration: none; }
   color: var(--c-beige);
   letter-spacing: 0.08em;
   line-height: 1.4;
-  
-  white-space: pre-wrap;          /* data.jsでのEnter改行を反映 */
-  word-break: keep-all;           /* 単語の途中で変な改行が起きるのを防ぐ */
+  white-space: pre-wrap;
+  word-break: keep-all;
   overflow-wrap: break-word;
 }
 
-/* 2. 中：文章（Enter改行が反映される設定） */
 .end-text {
   font-family: var(--font-fashion);
   line-height: 2.1;
@@ -542,11 +559,10 @@ a { color: inherit; text-decoration: none; }
   text-align: justify;
   margin-bottom: 2.5rem;
   color: var(--c-beige);
-  white-space: pre-wrap; /* Enter改行を反映 */
+  white-space: pre-wrap;
   letter-spacing: 0.04em;
 }
 
-/* 3. 下：画像 */
 .end-img {
   width: 100%;
   height: auto;
@@ -556,7 +572,6 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-/* 下部他エンドカード一覧エリア */
 .others-end-sec {
   margin-top: 4rem;
   padding-top: 2.5rem;
@@ -569,7 +584,6 @@ a { color: inherit; text-decoration: none; }
   text-shadow: none !important;
 }
 
-/* 詳細ページ用のエンドカードリスト表示調整 */
 .others-end-sec .endcard-item {
   background: rgba(255, 255, 255, 0.1);
   color: var(--c-beige);
@@ -586,4 +600,3 @@ a { color: inherit; text-decoration: none; }
 .credit { font-family: var(--font-fashion); font-size: 0.9rem; font-weight: 900; color: var(--c-purple); margin-bottom: 12px; }
 .twitter-btn { display: inline-block; width: 36px; height: 36px; }
 .twitter-btn img { width: 100%; height: 100%; object-fit: contain; }
-

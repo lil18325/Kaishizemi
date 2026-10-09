@@ -32,25 +32,30 @@
         fullNav.hidden = true;
       };
     });
-   
    /* ---------- 2. キャラクターグリッド生成 ---------- */
-   function buildCharaGrid(targetElId) {
-     const ul = $(targetElId);
-     if (!ul) return;
-     ul.innerHTML = "";
-   
-     CHARAS.forEach(c => {
-       const li = document.createElement("li");
-       li.innerHTML = `
-         <div class="chara-card" onclick="location.hash='#chara-${c.id}'">
-           <div class="chara-thumb-oval">
-             <img src="${c.fullImg}" alt="${c.name}" onerror="this.src='images/icon.webp'">
-           </div>
-           <span class="chara-name">${c.shortName}</span>
-         </div>`;
-       ul.appendChild(li);
-     });
-   }
+function buildCharaGrid(targetElId) {
+  const ul = $(targetElId);
+  if (!ul) return;
+  ul.innerHTML = "";
+
+  CHARAS.forEach(c => {
+    const li = document.createElement("li");
+    
+    // 設定がない場合のデフォルト初期値（大きさ200%、横-50%、縦-20%）
+    const zoom = c.thumbZoom || 200;
+    const x = c.thumbX !== undefined ? c.thumbX : -50;
+    const y = c.thumbY !== undefined ? c.thumbY : -20;
+
+    li.innerHTML = `
+      <div class="chara-card" onclick="location.hash='#chara-${c.id}'">
+        <div class="chara-thumb-oval">
+          <img src="${c.fullImg}" alt="${c.name}" style="width: ${zoom}%; left: ${x}%; top: ${y}%;" onerror="this.src='images/icon.webp'">
+        </div>
+        <span class="chara-name">${c.shortName}</span>
+      </div>`;
+    ul.appendChild(li);
+  });
+}
    
    buildCharaGrid("chara-grid");
    buildCharaGrid("others-grid");
@@ -75,28 +80,52 @@
   buildEndCardList("others-end-grid");
    
    /* ---------- 4. キャラ詳細の描画 ---------- */
-   function renderDetail(charaId) {
-     const idx = CHARAS.findIndex(item => item.id === charaId);
-     currentIdx = idx >= 0 ? idx : 0;
-     const c = CHARAS[currentIdx];
-   
-     // 1. セリフを先に描画
-     $("vertical-quote").textContent = c.quote || "";
-   
-     // 2. 立ち絵のアニメーション発火
-     const artEl = $("art");
-     artEl.innerHTML = `<img src="${c.fullImg}" alt="${c.name}">`;
-     artEl.classList.remove("float-anim");
-     void artEl.offsetWidth;
-     artEl.classList.add("float-anim");
-   
-     // 3. フルネーム（c.name）を大きく、説明文を配置
-     $("chara-info").innerHTML = `
-       <h3 class="detail-chara-name">${c.name}</h3>
-       <span class="detail-chara-kana">${c.kana || ''}</span>
-       <p class="detail-chara-desc">${c.desc}</p>
-     `;
-   }
+function renderDetail(charaId) {
+  const idx = CHARAS.findIndex(item => item.id === charaId);
+  currentIdx = idx >= 0 ? idx : 0;
+  const c = CHARAS[currentIdx];
+
+  // ① ページの背景色を上下グラデーションに変更
+  const detailPage = $("detail");
+  if (detailPage) {
+    const topColor = c.bgTop || "#6e5f98";
+    const bottomColor = c.bgBottom || "#6e5f98";
+    detailPage.style.background = `linear-gradient(to bottom, ${topColor}, ${bottomColor})`;
+  }
+
+  // ② セリフ枠（背景色だけを少し透明にして適用）
+  const quoteEl = $("vertical-quote");
+  quoteEl.innerHTML = "";
+  const lines = (c.quote || "").split("\n");
+  lines.forEach(line => {
+    const span = document.createElement("span");
+    span.className = "quote-line";
+    span.textContent = line;
+    if (c.quoteBg) {
+      // #733e7b のような6桁カラーコードの末尾に "d9"（不透明度85%）を自動付与
+      const isHex6 = c.quoteBg.startsWith("#") && c.quoteBg.length === 7;
+      span.style.backgroundColor = isHex6 ? c.quoteBg + "d9" : c.quoteBg;
+    }
+    quoteEl.appendChild(span);
+  });
+
+  // ③ 背景に icon-fff.webp を配置 ＆ 立ち絵の描画
+  const artEl = $("art");
+  artEl.innerHTML = `
+    <img src="images/icon-fff.webp" class="chara-bg-icon" alt="" aria-hidden="true" onerror="this.style.display='none'">
+    <img src="${c.fullImg}" class="chara-main-img" alt="${c.name}">
+  `;
+  artEl.classList.remove("float-anim");
+  void artEl.offsetWidth;
+  artEl.classList.add("float-anim");
+
+  // ④ キャラ情報
+  $("chara-info").innerHTML = `
+    <h3 class="detail-chara-name">${c.name}</h3>
+    <span class="detail-chara-kana">${c.kana || ''}</span>
+    <p class="detail-chara-desc">${c.desc}</p>
+  `;
+}
    
    /* ---------- 5. 左右ボタン & スワイプ切り替え ---------- */
    function stepChara(dir) {
