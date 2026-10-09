@@ -8,7 +8,7 @@
       name: "リオン・アルヴェイン",
       shortName: "リオン",
       kana: "Lion Alvein",
-      fullImg: "images/lion1.webp",
+      fullImg: "images/Lion1.webp",
       quote: "「……よくやった。あとは俺が引き受ける」",
       desc: "天界入境審査庁で働いている幹部天使。<br>新人の監視役。反乱天使たちの頼れるリーダー。無愛想で真面目な人。第一印象は厳しい人に見えるが、実際は多くの天使に慕われている。"
     },
@@ -17,7 +17,7 @@
       name: "ローベルト・ヴィンター",
       shortName: "ローベルト",
       kana: "Robert Winter",
-      fullImg: "images/robert1.webp",
+      fullImg: "images/Robert1.webp",
       quote: "「皆で頑張るぞ！より良い世界のために！」",
       desc: "天界入境審査庁の幹部天使。<br>ハッピー計画に賛同している。位の高い貴族家出身。まっすぐで純粋な思想を持つ。審査庁の顔役で有名人。"
     },
@@ -26,7 +26,7 @@
       name: "ニコロ・アレッシオ",
       shortName: "ニコロ",
       kana: "Nicolo Alessio",
-      fullImg: "images/nicolo1.webp",
+      fullImg: "images/Nicolo1.webp",
       quote: "「ありがとう、みんなのおかげで状況が動きました！」",
       desc: "天界入境審査庁で働いている先輩審査官。<br>ハッピー計画に反対している反乱天使。元気いっぱいな頑張り屋。人間や他の天使たちが大好き。"
     },
@@ -35,7 +35,7 @@
       name: "コムギ・アマハ",
       shortName: "コムギ",
       kana: "Komugi Amaha",
-      fullImg: "images/komugi1.webp",
+      fullImg: "images/Komugi1.webp",
       quote: "「幸せいっぱい、夢いっぱい、最高で〜す！」",
       desc: "HALO inc.の社員。仕事で人間界に降りていた。<br>いつもニコニコ、ワタワタ、能天気。ごく一般的な天使である。よく何も無いところで転んでいる。"
     },
@@ -44,7 +44,7 @@
       name: "シェイド・グレイ",
       shortName: "シェイド",
       kana: "Shade Grey",
-      fullImg: "images/shade1.webp",
+      fullImg: "images/Shade1.webp",
       quote: "「今日は定時で帰れそうだ……」",
       desc: "しらはカンパニーの社員。実験のため人間界へ出張していた。<br>社畜。常にエナドリを携帯しており、持っていないと落ち着かない。そのため常に寝不足状態。"
     },
@@ -53,7 +53,7 @@
       name: "ベリル・フィンスター",
       shortName: "ベリル",
       kana: "Beryl Finster",
-      fullImg: "images/beryl1.webp",
+      fullImg: "images/Beryl1.webp",
       quote: "「きゃはは！天界の窓という窓に指紋つけてやる！」",
       desc: "天使に擬態した悪魔。計画を壊すために乗り込んできた。<br>感情が表に出やすく、素直で自己中な悪魔らしい子。食べることが好きで、特に甘い物を求めている。"
     },
@@ -62,7 +62,7 @@
       name: "オルフェス・ローウェル",
       shortName: "オルフェス",
       kana: "Orphes Lowell",
-      fullImg: "images/orphes1.webp",
+      fullImg: "images/Orphes1.webp",
       quote: "「うん、みんなかわいいね。楽しい日になりそうだ」",
       desc: "天使に擬態した悪魔。計画を邪魔するために乗り込んできた。<br>悪魔にしては珍しく、おっとりとしていて優しい博愛主義。普段から人間を魅了してはエネルギーを得ている。"
     },
@@ -71,7 +71,7 @@
       name: "ソフィア・リクレア",
       shortName: "ソフィア",
       kana: "Sophia Ricrea",
-      fullImg: "images/sophia1.webp",
+      fullImg: "images/Sophia1.webp",
       quote: "「この先も悔いのない選択を！」",
       desc: "計画に反対する反乱天使。反乱の意思を見抜かれ、追放されていた。<br>明るく人懐っこく、好奇心旺盛。頭の回転が速く、知恵と言葉を武器に困難へ立ち向かう。"
     }
