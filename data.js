@@ -23,7 +23,7 @@
       name: "ローベルト・ヴィンター",
       shortName: "ローベルト",
       kana: "Robert Winter",
-      fullImg: "images/robert1.webp",
+      fullImg: "images/Robert1.webp",
       bgTop: "#d5cbca",
     bgBottom: "#734967",
     quoteBg: "#b14447b3",
