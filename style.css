@@ -44,18 +44,40 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.12em;
   display: flex;
 }
+
+/* ★ 1サイクルの長さを 2.8秒にして infinite（無限繰り返し）に指定 */
 .loading-text span {
   display: inline-block;
   opacity: 0;
   transform: translateY(10px);
-  animation: charFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: loadingLoop 2.8s infinite;
   animation-delay: calc(var(--i) * 0.08s);
 }
 
-@keyframes charFadeIn {
-  to {
+/* ★ アニメーションの流れ（表示 ➜ 停止 ➜ 消去 ➜ 待機間隔） */
+@keyframes loadingLoop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  20% {
     opacity: 1;
     transform: translateY(0);
+  }
+  /* 20%〜60%：全文字が揃った状態で画面に留まる */
+  60% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* 75%：上へふわっと消える */
+  75% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  /* 75%〜100%：消えたまま少し待つ（約0.7秒の間隔を作る） */
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
   }
 }
 
@@ -216,6 +238,21 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.04em;
 }
 
+/* INTRODUCTION枠下の全体注意書き */
+.site-warning {
+  font-family: var(--font-fashion);
+  font-weight: 700;
+  color: var(--c-purple);
+  text-align: center;
+
+  /* ★ 上下の余白（お好みの広さに応じて数値を変更してください） */
+  margin-top: 3rem;      /* 上（枠）との間隔：1.2rem から 2rem に拡大 */
+  margin-bottom: 6rem; /* 下（ダイヤ装飾）との間隔：-1rem から 1.2rem に変更して離す */
+
+  opacity: 0.85;
+  letter-spacing: 0.05em;
+}
+
 .diamond-decor {
   display: flex;
   align-items: center;
@@ -320,38 +357,43 @@ a { color: inherit; text-decoration: none; }
   padding-bottom: 60px;
   width: 100%;
   overflow-x: hidden;
-  transition: background-color 0.5s ease; /* ① スムーズな背景色切り替え */
-  color: #ffffff;
+  background-color: #ffffff; /* ★黒(#1a1622)から「白」に変更 */
+  color: var(--c-purple);    /* ★文字色をテーマの紫系に変更 */
 }
 .detail-container { max-width: 500px; margin: 0 auto; padding: 0 12px; }
 
+/* 立ち絵ステージ（ここだけキャラごとのグラデーション背景になります） */
 .stage {
   position: relative;
-  height: 78svh;
+  height: 90svh;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem;
   width: 100%;
+  /* border-radius: 12px; */
+  /* overflow: hidden; */
+  /* transition: background 0.5s ease; */
+  /* box-shadow: 0 8px 24px rgba(78, 59, 93, 0.15); */
 }
 
 .nav-arrow {
-  position: absolute;
-  top: 45%;
+  position: fixed;        /* ★ absolute から fixed に変更して画面上に固定 */
+  top: 50%;               /* 画面の縦中央 */
   transform: translateY(-50%);
-  z-index: 30;
+  z-index: 100;           /* 前面に表示 */
   background: transparent;
   border: none;
-  color: #ffffff;
+  color: #4e3b5d;         /* ★ テーマカラーの紫に変更 */
   font-size: 3.2rem;
   font-weight: 300;
   cursor: pointer;
-  padding: 0 8px;
+  padding: 10px 6px;
   line-height: 1;
   user-select: none;
 }
-.nav-arrow.prev { left: 0; }
-.nav-arrow.next { right: 0; }
+.nav-arrow.prev { left: 8px; }
+.nav-arrow.next { right: 8px; }
 
 .art-wrap {
   position: relative;
@@ -370,37 +412,45 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
 }
 
-/* ③ 背景の白透過アイコン */
+/* ２. 背景のロゴアイコン（グラデーションマスク ＆ 位置引き上げ） */
 .chara-bg-icon {
   position: absolute;
-  top: 18%;
+  top: 6%;                /* ★ 15% から 6% に変更し、位置を高く設定 */
   left: 50%;
   transform: translateX(-50%);
-  width: 260px;
-  height: 260px;
-  object-fit: contain;
+  width: 280px;
+  height: 280px;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.18; /* ほんのり透過 */
+  opacity: 0.55;          /* グラデーションが綺麗に映える不透明度 */
+
+  /* ★ CSSマスクで icon-fff.webp の形にグラデーションを流し込む */
+  -webkit-mask-image: url("images/icon-fff.webp");
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-image: url("images/icon-fff.webp");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
 }
 
 .chara-main-img {
   position: relative;
   z-index: 2;
-  max-height: 76svh;
+  max-height: 90svh;
   width: auto;
   object-fit: contain;
   object-position: bottom center;
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.35));
 }
 
-.art.float-anim {
+.chara-main-img.float-anim {
   animation: charaFloatUp 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes charaFloatUp {
   from {
-    opacity: 0;
+    opacity: 0.8;
     transform: translateY(25px);
   }
   to {
@@ -409,32 +459,29 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-/* ② セリフの囲み枠（改行で独立 ＆ 列間ギャップ） */
 .vertical-quote {
   position: absolute;
-  top: 10px;
-  right: 40px;
+  top: 16px;
+  right: 36px;
   writing-mode: vertical-rl;
   font-family: var(--font-fashion);
   font-size: 1.05rem;
   font-weight: 700;
   color: #ffffff;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   line-height: 1.6;
   z-index: 10;
-  max-height: 68%;
+  max-height: 85%;
+  white-space: nowrap;        /* ★ 勝手に途中で改行（2行化）されないようにします */
   display: flex;
-  gap: 12px; /* ★列（行）同士の隙間 */
+  gap: 12px;
 }
 
-/* style.css 内の .quote-line の指定を以下に書き換え */
 .quote-line {
-  background: rgba(0, 0, 0, 0.45); /* デフォルト色（JSの指定がない場合の予備） */
-  backdrop-filter: blur(6px);
   padding: 16px 10px;
   border-radius: 6px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .chara-info {
@@ -442,11 +489,12 @@ a { color: inherit; text-decoration: none; }
   padding: 0 8px;
 }
 
+/* ★ 白背景に合わせて文字色を紫(#4e3b5d)に変更 */
 .detail-chara-name {
   font-family: var(--font-fashion);
   font-size: 1.6rem;
   font-weight: 500;
-  color: #ffffff;
+  color: var(--c-purple);
   margin-bottom: 0.2rem;
   letter-spacing: 0.08em;
 }
@@ -456,7 +504,8 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--font-fashion);
   font-size: 0.85rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--c-purple);
+  opacity: 0.75;
   margin-bottom: 1.2rem;
   letter-spacing: 0.12em;
 }
@@ -466,23 +515,23 @@ a { color: inherit; text-decoration: none; }
   line-height: 2.1;
   font-size: 0.98rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--c-purple);
   text-align: justify;
 }
 
-/* ④ 白色カーブくびれダイヤ4つ（接着配置 ＆ 発光） */
+/* ★ ダイヤマークの色も白背景で見えるよう紫に変更 */
 .diamond-divider {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0;
-  margin: 3.5rem auto 1rem;
+  margin: 2.5rem auto 1rem;
 }
 
 .curved-diamond {
   width: 20px;
   height: 20px;
-  fill: #ffffff;
+  fill: var(--c-purple);
   filter: none;
 }
 
@@ -493,7 +542,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .others-sec .chara-name {
-  color: #ffffff;
+  color: var(--c-purple);
 }
 
 /* ================= エンドカード詳細 ================= */
@@ -590,13 +639,29 @@ a { color: inherit; text-decoration: none; }
   border-color: var(--c-lavender);
 }
 
+/* トップ・キャラ詳細・エンド詳細の下部余白を一括で調整 */
+.top-body,
+.detail-page,
+.end-detail-page {
+  padding-bottom: 4rem; /* ★ フッター線までの距離感をしっかりキープ */
+}
+
 /* ================= フッター ================= */
 .site-footer {
   text-align: center;
-  padding: 30px 16px 40px;
+  padding: 40px 16px;
+  margin-top: 0;              /* ★ 白い隙間の原因だった外側余白をリセット */
   border-top: 1.5px solid var(--c-lavender);
-  margin-top: 4rem;
+  background-color: #ffffff; /* ★ フッターの色は白で固定 */
 }
-.credit { font-family: var(--font-fashion); font-size: 0.9rem; font-weight: 900; color: var(--c-purple); margin-bottom: 12px; }
+
+.credit { 
+  font-family: var(--font-fashion); 
+  font-size: 0.9rem; 
+  font-weight: 900; 
+  color: var(--c-purple); 
+  margin-bottom: 12px; 
+}
+
 .twitter-btn { display: inline-block; width: 36px; height: 36px; }
 .twitter-btn img { width: 100%; height: 100%; object-fit: contain; }

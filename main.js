@@ -6,16 +6,25 @@
    const N = CHARAS.length;
    let currentIdx = 0;
    
-   /* ---------- 0. ローディング画面 ---------- */
-   window.addEventListener("load", () => {
-     const loader = $("loading-screen");
-     if (loader) {
-       setTimeout(() => {
-         loader.classList.add("is-loaded");
-       }, 1000); // 一文字ずつのアニメーションが見える時間を少し確保
-     }
-   });
-   
+/* ---------- 0. ローディング画面 ---------- */
+window.addEventListener("load", () => {
+  const loader = $("loading-screen");
+  if (loader) {
+    setTimeout(() => {
+      loader.classList.add("is-loaded");
+
+      // ★ ローディング画面が消えた少し後（0.4秒後）にロゴをふわっと自動出現させる
+      setTimeout(() => {
+        const heroLogo = document.querySelector(".hero-logo-wrap");
+        if (heroLogo) {
+          heroLogo.classList.add("is-visible");
+        }
+      }, 800);
+
+    }, 1000); // ローディング文字が見える時間
+  }
+});
+
   /* ---------- 1. ハンバーガーメニュー ---------- */
     const menuBtn = $("menu-btn");
     const fullNav = $("full-nav");
@@ -79,21 +88,21 @@ function buildCharaGrid(targetElId) {
   buildEndCardList("endcard-grid");
   buildEndCardList("others-end-grid");
    
-   /* ---------- 4. キャラ詳細の描画 ---------- */
+/* ---------- 4. キャラ詳細の描画 ---------- */
 function renderDetail(charaId) {
   const idx = CHARAS.findIndex(item => item.id === charaId);
   currentIdx = idx >= 0 ? idx : 0;
   const c = CHARAS[currentIdx];
 
-  // ① ページの背景色を上下グラデーションに変更
-  const detailPage = $("detail");
-  if (detailPage) {
-    const topColor = c.bgTop || "#6e5f98";
-    const bottomColor = c.bgBottom || "#6e5f98";
-    detailPage.style.background = `linear-gradient(to bottom, ${topColor}, ${bottomColor})`;
-  }
+  // ① 立ち絵ステージ（.stage）の背景だけに上下グラデーションを適用
+  // const stageEl = $("stage");
+  // if (stageEl) {
+    // const topColor = c.bgTop || "#6e5f98";
+    // const bottomColor = c.bgBottom || "#6e5f98";
+    // stageEl.style.background = `linear-gradient(to bottom, ${topColor}, ${bottomColor})`;
+  // }
 
-  // ② セリフ枠（背景色だけを少し透明にして適用）
+  // ② セリフ枠（8桁指定ならそのまま、6桁ならd9を自動付与）
   const quoteEl = $("vertical-quote");
   quoteEl.innerHTML = "";
   const lines = (c.quote || "").split("\n");
@@ -102,31 +111,39 @@ function renderDetail(charaId) {
     span.className = "quote-line";
     span.textContent = line;
     if (c.quoteBg) {
-      // #733e7b のような6桁カラーコードの末尾に "d9"（不透明度85%）を自動付与
+      // 6桁（#733e7b）なら d9(85%) を付与。ローベルト等の8桁(#b14447b3)はそのまま70%適用
       const isHex6 = c.quoteBg.startsWith("#") && c.quoteBg.length === 7;
       span.style.backgroundColor = isHex6 ? c.quoteBg + "d9" : c.quoteBg;
     }
     quoteEl.appendChild(span);
   });
 
-  // ③ 背景に icon-fff.webp を配置 ＆ 立ち絵の描画
-  const artEl = $("art");
-  artEl.innerHTML = `
-    <img src="images/icon-fff.webp" class="chara-bg-icon" alt="" aria-hidden="true" onerror="this.style.display='none'">
-    <img src="${c.fullImg}" class="chara-main-img" alt="${c.name}">
-  `;
-  artEl.classList.remove("float-anim");
-  void artEl.offsetWidth;
-  artEl.classList.add("float-anim");
+ // ② 背景ロゴ＆立ち絵の描画
+ const topColor = c.bgTop || "#d1bad9";
+ const bottomColor = c.bgBottom || "#6e5f98";
 
-  // ④ キャラ情報
+ const artEl = $("art");
+ artEl.innerHTML = `
+   <div class="chara-bg-icon" style="background: linear-gradient(to bottom, ${topColor}, ${bottomColor});" aria-hidden="true"></div>
+   <img src="${c.fullImg}" class="chara-main-img" id="chara-main-img" alt="${c.name}">
+ `;
+
+ // ★ 立ち絵画像（#chara-main-img）だけにアニメーションを適用
+ const mainImg = $("chara-main-img");
+ if (mainImg) {
+   mainImg.classList.remove("float-anim");
+   void mainImg.offsetWidth; // リフロー発火
+   mainImg.classList.add("float-anim");
+ }
+
+  // ③ キャラ情報
   $("chara-info").innerHTML = `
     <h3 class="detail-chara-name">${c.name}</h3>
     <span class="detail-chara-kana">${c.kana || ''}</span>
     <p class="detail-chara-desc">${c.desc}</p>
   `;
 }
-   
+
    /* ---------- 5. 左右ボタン & スワイプ切り替え ---------- */
    function stepChara(dir) {
      const nextIdx = (currentIdx + dir + N) % N;
@@ -155,7 +172,6 @@ function renderDetail(charaId) {
      }
    }, { passive: true });
    
-   /* ---------- 6. エンドカード詳細の描画 ---------- */
    /* ---------- 6. エンドカード詳細の描画 ---------- */
     let currentEndIdx = 0;
 
@@ -227,32 +243,22 @@ function route() {
 addEventListener("hashchange", route);
 route();
 
-/* ---------- 8. スクロール監視（ヘッダー ＆ キービジュロゴの制御） ---------- */
+/* ---------- 8. スクロール監視（ヘッダー制御） ---------- */
 const header = document.querySelector(".fixed-header");
 const topHero = document.querySelector(".top-hero");
-const heroLogo = document.querySelector(".hero-logo-wrap");
 
 function handleScrollEffects() {
   const hash = location.hash;
   const isTopPage = !hash || hash === "#top" || hash === "#intro-sec" || hash === "#chara-sec" || hash === "#endcard-sec";
   const menuBtn = $("menu-btn");
-  const scrollY = window.scrollY || document.documentElement.scrollTop;
 
-  /* --- A. キービジュロゴの表示制御（少しスクロールしたら浮き出る） --- */
-  if (heroLogo) {
-    if (isTopPage && scrollY > 40) { // 40px以上スクロールしたら表示
-      heroLogo.classList.add("is-visible");
-    } else {
-      heroLogo.classList.remove("is-visible");
-    }
-  }
-
-  /* --- B. 固定ヘッダーの表示制御 --- */
+  // メニューが開いている時はヘッダーを表示
   if (menuBtn && menuBtn.classList.contains("is-active")) {
     header.classList.remove("is-hidden");
     return;
   }
 
+  // ★ ロゴの表示切り替え処理（scrollY > 40）を削除し、固定ヘッダーの制御のみに変更
   if (isTopPage && topHero) {
     const heroBottom = topHero.getBoundingClientRect().bottom;
     if (heroBottom > 100) {
