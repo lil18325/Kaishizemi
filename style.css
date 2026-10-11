@@ -195,19 +195,26 @@ a { color: inherit; text-decoration: none; }
   display: block;
 }
 
-/* ★ PC（横長画面）の時だけ、画像を切り取らず全体を表示する */
+/* ★ PC（横長画面）：横幅100%のまま、切り取らず下まで全容を表示 */
 @media (min-width: 768px) {
   .top-hero {
-    height: 90vh; /* PCで画面いっぱいに収まる高さに調整 */
+    height: auto;        /* ★ 高さを自動にして縦方向の切り取りを防止 */
   }
   
   .top-hero > img {
-    object-fit: contain; /* 画像を切り取らず全体を写す */
-    object-position: center top;
+    width: 100%;         /* ★ 横幅は画面いっぱいに広げる */
+    height: auto;        /* ★ 画像の比率に合わせて縦もすべて表示 */
   }
 
+  /* ロゴの位置を画像の下基準に変更して綺麗に配置 */
   .hero-logo-wrap {
-    top: 70%; /* PCでロゴが被る位置を微調整 */
+    top: auto;
+    bottom: 8%;
+    transform: translate(-50%, 0);
+  }
+
+  .hero-logo-wrap.is-visible {
+    transform: translate(-50%, 0);
   }
 }
 
