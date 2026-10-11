@@ -102,7 +102,7 @@ function renderDetail(charaId) {
     // stageEl.style.background = `linear-gradient(to bottom, ${topColor}, ${bottomColor})`;
   // }
 
-  // ② セリフ枠（8桁指定ならそのまま、6桁ならd9を自動付与）
+  // ① セリフ枠（8桁指定ならそのまま、6桁ならd9を自動付与）
   const quoteEl = $("vertical-quote");
   quoteEl.innerHTML = "";
   const lines = (c.quote || "").split("\n");
