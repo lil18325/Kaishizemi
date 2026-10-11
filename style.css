@@ -199,8 +199,9 @@ a { color: inherit; text-decoration: none; }
 .top-hero::after {
   content: "";
   position: absolute;
-  bottom: -1;
+  bottom: -1px;
   left: 0;
+  right: 0;
   height: 35%; /* グラデーションの高さも少し広げてなじませる */
   background: linear-gradient(
     to bottom, 
