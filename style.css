@@ -488,6 +488,58 @@ a { color: inherit; text-decoration: none; }
   gap: 12px;
 }
 
+/* 立ち絵左下の悪魔姿切り替えダイヤマーク */
+.demon-toggle-btn {
+  position: absolute;
+  bottom: 24px;
+  left: 54px;
+  z-index: 15;
+  background: none;
+  border: none;
+  outline: none; /* ★ タップ時やフォーカス時の四角い枠線を消去 */
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent; /* スマホタップ時の四角いハイライトを消去 */
+  transition: transform 0.2s ease;
+}
+
+.demon-toggle-btn:focus,
+.demon-toggle-btn:focus-visible {
+  outline: none; /* ブラウザ標準の四角いフォーカスリングを消去 */
+}
+
+/* 通常時（天使姿）のダイヤ */
+.demon-diamond-icon {
+  width: 42px;
+  height: 42px;
+  fill: var(--c-purple);
+  stroke: transparent; /* 縁線なし */
+  stroke-width: 0;
+  transition: fill 0.25s ease, stroke 0.25s ease, transform 0.3s ease, filter 0.25s ease;
+}
+
+/* TAPラベル文字 */
+.demon-toggle-label {
+  font-family: var(--font-fashion);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+/* 悪魔姿（ON状態）の時：ダイヤの縁がカラーでくっきり色づく */
+.demon-toggle-btn.is-active .demon-diamond-icon {
+  fill: #ffffff; /* 中身は白 */
+  stroke: var(--c-purple); /* ★ ダイヤの縁をテーマカラーの紫（#4e3b5d）で色づけ */
+  stroke-width: 1px;     /* 縁の太さ */
+  transform: rotate(180deg);
+}
+
 .quote-line {
   padding: 16px 10px;
   border-radius: 6px;

@@ -118,7 +118,7 @@ function renderDetail(charaId) {
     quoteEl.appendChild(span);
   });
 
- // ② 背景ロゴ＆立ち絵の描画
+ /// ② 背景ロゴ＆立ち絵の描画
  const topColor = c.bgTop || "#d1bad9";
  const bottomColor = c.bgBottom || "#6e5f98";
 
@@ -126,15 +126,45 @@ function renderDetail(charaId) {
  artEl.innerHTML = `
    <div class="chara-bg-icon" style="background: linear-gradient(to bottom, ${topColor}, ${bottomColor});" aria-hidden="true"></div>
    <img src="${c.fullImg}" class="chara-main-img" id="chara-main-img" alt="${c.name}">
+   ${c.demonImg ? `
+     <button class="demon-toggle-btn" id="demon-toggle-btn" aria-label="悪魔姿に切り替え">
+       <svg class="demon-diamond-icon" viewBox="0 0 24 24"><path d="M12 2 C12 8 8 12 2 12 C8 12 12 16 12 22 C12 16 16 12 22 12 C16 12 12 8 12 2 Z"/></svg>
+       <span class="demon-toggle-label">TAP</span>
+     </button>
+   ` : ''}
  `;
 
- // ★ 立ち絵画像（#chara-main-img）だけにアニメーションを適用
+ // ★ 立ち絵画像（#chara-main-img）のアニメーション＆悪魔姿切り替え処理
  const mainImg = $("chara-main-img");
  if (mainImg) {
-   mainImg.classList.remove("float-anim");
-   void mainImg.offsetWidth; // リフロー発火
-   mainImg.classList.add("float-anim");
+   if (mainImg.complete) {
+     mainImg.classList.add("float-anim");
+   } else {
+     mainImg.onload = () => mainImg.classList.add("float-anim");
+   }
  }
+
+ // ★ 悪魔姿切り替えボタンの動作
+ if (c.demonImg) {
+  const toggleBtn = $("demon-toggle-btn");
+  let isDemon = false;
+
+  if (toggleBtn && mainImg) {
+    toggleBtn.onclick = () => {
+      isDemon = !isDemon;
+      
+      // ① 立ち絵画像の切り替え
+      mainImg.src = isDemon ? c.demonImg : c.fullImg;
+      toggleBtn.classList.toggle("is-active", isDemon);
+
+      // ② セリフの「文字色」だけを切り替え（背景色はそのまま）
+      const quoteLines = quoteEl.querySelectorAll(".quote-line");
+      quoteLines.forEach(span => {
+        span.style.color = isDemon ? "#1a1622" : "#ffffff"; // 悪魔姿：黒 / 通常：白
+      });
+    };
+  }
+}
 
   // ③ キャラ情報
   $("chara-info").innerHTML = `
