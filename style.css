@@ -208,10 +208,10 @@ a { color: inherit; text-decoration: none; }
 
 .hero-logo-wrap {
   position: absolute;
-  bottom: -15px;
+  bottom: -5px;
   left: 50%;
-  width: 75%;          
-  max-width: 320px;    
+  width: 90%;          
+  max-width: 450px;    
   z-index: 10;         
   opacity: 0;
   transform: translate(-50%, 20px);
