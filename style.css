@@ -528,6 +528,8 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--font-fashion);
   font-size: 0.65rem;
   font-weight: 700;
+  color: var(--c-purple) !important;
+  -webkit-text-fill-color: var(--c-purple);
   letter-spacing: 0.12em;
   line-height: 1;
 }
