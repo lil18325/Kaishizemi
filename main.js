@@ -205,6 +205,27 @@ function renderDetail(charaId) {
     if (endPrevBtn) endPrevBtn.onclick = () => stepEndCard(-1);
     if (endNextBtn) endNextBtn.onclick = () => stepEndCard(1);
    
+    const endStageEl = document.querySelector(".end-card-stage");
+    if (endStageEl) {
+      let endTouchStartX = 0;
+      let endTouchStartY = 0;
+
+      endStageEl.addEventListener("touchstart", e => {
+        endTouchStartX = e.touches[0].clientX;
+        endTouchStartY = e.touches[0].clientY;
+      }, { passive: true });
+
+      endStageEl.addEventListener("touchend", e => {
+        const dx = e.changedTouches[0].clientX - endTouchStartX;
+        const dy = e.changedTouches[0].clientY - endTouchStartY;
+
+        // 横移動が40px以上、かつ縦移動より横移動が大きい場合に発火
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+          stepEndCard(dx < 0 ? 1 : -1);
+        }
+      }, { passive: true });
+    }
+
    /* ---------- 7. ルーティング ---------- */
 function route() {
   const hash = location.hash;
