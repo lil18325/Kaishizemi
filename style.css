@@ -195,21 +195,23 @@ a { color: inherit; text-decoration: none; }
   display: block;
 }
 
-/* ★ PC（横長画面）：横幅100%のまま、切り取らず下まで全容を表示 */
+/* ★ PC（横長画面）：横幅100%いっぱいに広げ、下まで切らずに全体を表示 */
 @media (min-width: 768px) {
   .top-hero {
-    height: auto;        /* ★ 高さを自動にして縦方向の切り取りを防止 */
-  }
-  
-  .top-hero > img {
-    width: 100%;         /* ★ 横幅は画面いっぱいに広げる */
-    height: auto;        /* ★ 画像の比率に合わせて縦もすべて表示 */
+    height: auto;          /* 縦方向の高さ固定を解除 */
+    overflow: visible;     /* はみ出しの切り取りを解除 */
   }
 
-  /* ロゴの位置を画像の下基準に変更して綺麗に配置 */
+  .top-hero > img {
+    width: 100%;           /* 画面の横幅いっぱいに拡大 */
+    height: auto;          /* 画像の本来の比率で下端まで全表示 */
+    object-fit: fill;      /* 縮小処理を無効化 */
+  }
+
+  /* ロゴの位置調整（画像の下部に綺麗に配置） */
   .hero-logo-wrap {
     top: auto;
-    bottom: 8%;
+    bottom: 50px;
     transform: translate(-50%, 0);
   }
 
