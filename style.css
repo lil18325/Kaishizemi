@@ -178,9 +178,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ================= セクション共通余白 ================= */
-.sec-intro, .sec-chara, .sec-flow, .sec-event, .sec-goods, .sec-food { 
-  margin-top: 8rem;
-}
+.sec-intro, .sec-chara, .sec-endcard { margin-top: 8rem; }
 
 /* ================= トップページ ================= */
 .top-hero {
