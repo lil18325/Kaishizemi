@@ -274,11 +274,29 @@ a { color: inherit; text-decoration: none; }
 }
 .intro-text {
   font-family: var(--font-fashion);
-  line-height: 2.1;
-  font-size: 1rem;
+  color: var(--c-purple);
+  text-align: center; /* 中央揃えで世界観を演出 */
+  padding-top: 30px;
+}
+
+/* 一文一文の間隔を広めに確保 */
+.intro-line {
+  font-size: 0.95rem;
   font-weight: 600;
-  text-align: justify;
-  letter-spacing: 0.04em;
+  line-height: 1.9;
+  margin-bottom: 1.2rem; /* 文ごとの間隔 */
+}
+
+/* 強調文字（あなたの選択が未来を変える。） */
+.intro-catch {
+  font-size: 1.35rem;     /* 文字を大きく指定 */
+  font-weight: 900;
+  -webkit-text-stroke: 0.5px var(--c-purple);
+  line-height: 1.6;
+  margin-top: 2.8rem;     /* 上の文との間隔をさらに大きく */
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.08em;
+  color: var(--c-purple);
 }
 
 /* INTRODUCTION枠下の全体注意書き */
