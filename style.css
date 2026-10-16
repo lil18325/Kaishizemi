@@ -45,7 +45,6 @@ a { color: inherit; text-decoration: none; }
   display: flex;
 }
 
-/* ★ 1サイクルの長さを 2.8秒にして infinite（無限繰り返し）に指定 */
 .loading-text span {
   display: inline-block;
   opacity: 0;
@@ -54,34 +53,13 @@ a { color: inherit; text-decoration: none; }
   animation-delay: calc(var(--i) * 0.08s);
 }
 
-/* ★ アニメーションの流れ（表示 ➜ 停止 ➜ 消去 ➜ 待機間隔） */
 @keyframes loadingLoop {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  20% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  /* 20%〜60%：全文字が揃った状態で画面に留まる */
-  60% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  /* 75%：上へふわっと消える */
-  75% {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  /* 75%〜100%：消えたまま少し待つ（約0.7秒の間隔を作る） */
-  100% {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
+  0% { opacity: 0; transform: translateY(10px); }
+  20%, 60% { opacity: 1; transform: translateY(0); }
+  75%, 100% { opacity: 0; transform: translateY(-8px); }
 }
 
-/* ================= 固定ヘッダー & ハンバーガー ================= */
+/* ================= 固定ヘッダー基本（スマホ） ================= */
 .fixed-header {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -93,7 +71,7 @@ a { color: inherit; text-decoration: none; }
   padding: 0 16px;
   pointer-events: none;
   width: 100%;
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition: opacity 0.35s ease, transform 0.35s ease, background-color 0.35s ease;
 }
 
 .fixed-header.is-hidden {
@@ -103,13 +81,15 @@ a { color: inherit; text-decoration: none; }
 }
 
 .fixed-header.is-hidden .header-logo,
-.fixed-header.is-hidden .menu-btn {
+.fixed-header.is-hidden .menu-btn,
+.fixed-header.is-hidden .header-nav {
   pointer-events: none !important;
 }
 
-.header-logo, .menu-btn { pointer-events: auto; }
+.header-logo, .menu-btn, .header-nav { pointer-events: auto; }
 .header-logo img { height: 68px; width: auto; object-fit: contain; }
-.logo-fallback { font-family: var(--font-fashion); font-weight: 800; font-size: 1.6rem; color: var(--c-purple); }
+
+.header-nav { display: none; }
 
 .menu-btn {
   width: 46px; height: 46px;
@@ -132,12 +112,8 @@ a { color: inherit; text-decoration: none; }
   transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
 }
 
-.menu-btn.is-active {
-  background: var(--c-purple);
-}
-.menu-btn.is-active span {
-  background: #ffffff;
-}
+.menu-btn.is-active { background: var(--c-purple); }
+.menu-btn.is-active span { background: #ffffff; }
 .menu-btn.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .menu-btn.is-active span:nth-child(2) { opacity: 0; }
 .menu-btn.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
@@ -152,10 +128,10 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
 }
 .nav-list { list-style: none; text-align: center; }
-.nav-list li { margin: 2rem 0; }
+.nav-list li { margin: 1.5rem 0; }
 .nav-link {
   font-family: var(--font-fashion);
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 800;
   color: var(--c-purple);
   letter-spacing: 0.15em;
@@ -178,7 +154,9 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ================= セクション共通余白 ================= */
-.sec-intro, .sec-chara, .sec-endcard { margin-top: 8rem; }
+.sec-intro, .sec-chara, .sec-endcard { 
+  margin-top: 8rem;
+}
 
 /* ================= トップページ ================= */
 .top-hero {
@@ -191,34 +169,9 @@ a { color: inherit; text-decoration: none; }
 .top-hero > img {
   width: 100%;
   height: 100%;
-  object-fit: cover;          /* スマホ（縦長画面）では枠いっぱいに表示 */
+  object-fit: cover;
   object-position: center top;
   display: block;
-}
-
-/* ★ PC（横長画面）：横幅100%いっぱいに広げ、下まで切らずに全体を表示 */
-@media (min-width: 768px) {
-  .top-hero {
-    height: auto;          /* 縦方向の高さ固定を解除 */
-    overflow: visible;     /* はみ出しの切り取りを解除 */
-  }
-
-  .top-hero > img {
-    width: 100%;           /* 画面の横幅いっぱいに拡大 */
-    height: auto;          /* 画像の本来の比率で下端まで全表示 */
-    object-fit: fill;      /* 縮小処理を無効化 */
-  }
-
-  /* ロゴの位置調整（画像の下部に綺麗に配置） */
-  .hero-logo-wrap {
-    top: auto;
-    bottom: 50px;
-    transform: translate(-50%, 0);
-  }
-
-  .hero-logo-wrap.is-visible {
-    transform: translate(-50%, 0);
-  }
 }
 
 .top-hero::after {
@@ -275,22 +228,20 @@ a { color: inherit; text-decoration: none; }
 .intro-text {
   font-family: var(--font-fashion);
   color: var(--c-purple);
-  text-align: center; /* 中央揃えで世界観を演出 */
+  text-align: center;
   padding-top: 30px;
 }
 
-/* 一文一文の間隔を広めに確保 */
 .intro-line {
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.9;
-  margin-bottom: 1.2rem; /* 文ごとの間隔 */
+  margin-bottom: 1.2rem;
 }
 
-/* 強調文字（あなたの選択が未来を変える。） */
 .intro-catch {
-  white-space: nowrap;                      /* ★ 途中で改行させず必ず1行に収める */
-  font-size: clamp(0.9rem, 4.2vw, 1.25rem);  /* ★ 画面幅に合わせて自動縮小（スマホでも収まる） */
+  white-space: nowrap;
+  font-size: clamp(0.9rem, 4.2vw, 1.25rem);
   -webkit-text-stroke: 0.5px var(--c-purple);
   text-align: center;
   font-family: var(--font-fashion);
@@ -298,23 +249,8 @@ a { color: inherit; text-decoration: none; }
   color: var(--c-purple);
   line-height: 1.6;
   letter-spacing: 0.08em;
-  margin-top: 2.8rem;     /* 上の文との間隔をさらに大きく */
+  margin-top: 2.8rem;
   margin-bottom: 0.5rem;
-}
-
-/* INTRODUCTION枠下の全体注意書き */
-.site-warning {
-  font-family: var(--font-fashion);
-  font-weight: 700;
-  color: var(--c-purple);
-  text-align: center;
-
-  /* ★ 上下の余白（お好みの広さに応じて数値を変更してください） */
-  margin-top: 3rem;      /* 上（枠）との間隔：1.2rem から 2rem に拡大 */
-  margin-bottom: 6rem; /* 下（ダイヤ装飾）との間隔：-1rem から 1.2rem に変更して離す */
-
-  opacity: 0.85;
-  letter-spacing: 0.05em;
 }
 
 .diamond-decor {
@@ -369,7 +305,6 @@ a { color: inherit; text-decoration: none; }
   cursor: pointer;
 }
 
-/* サムネイル（Oval枠内での絶対位置切り出し指定） */
 .chara-thumb-oval {
   width: 100%;
   aspect-ratio: 1.25 / 1;
@@ -398,6 +333,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.05em;
 }
 
+/* ================= END CARD セクション ================= */
 .endcard-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
 .endcard-item {
   border: 2px solid var(--c-purple);
@@ -406,49 +342,48 @@ a { color: inherit; text-decoration: none; }
   background: var(--c-beige);
   font-family: var(--font-fashion);
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 3.8vw, 1.1rem);
+  white-space: nowrap;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  gap: 8px;
 }
-.endcard-item::after { content: "›"; font-size: 1.4rem; }
+.endcard-item::after { content: "›"; font-size: 1.4rem; flex-shrink: 0; }
 
 /* ================= キャラ詳細ページ ================= */
 .detail-page {
   min-height: 100svh;
-  padding-top: 80px;
+  padding-top: 96px;
   padding-bottom: 60px;
   width: 100%;
   overflow-x: hidden;
-  background-color: #ffffff; /* ★黒(#1a1622)から「白」に変更 */
-  color: var(--c-purple);    /* ★文字色をテーマの紫系に変更 */
+  background-color: #ffffff;
+  color: var(--c-purple);
 }
 .detail-container { max-width: 500px; margin: 0 auto; padding: 0 12px; }
 
-/* 立ち絵ステージ（ここだけキャラごとのグラデーション背景になります） */
 .stage {
   position: relative;
-  height: 90svh;
+  height: calc(100svh - 170px);
+  max-height: 620px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   margin-bottom: 1.8rem;
   width: 100%;
-  /* border-radius: 12px; */
-  /* overflow: hidden; */
-  /* transition: background 0.5s ease; */
-  /* box-shadow: 0 8px 24px rgba(78, 59, 93, 0.15); */
 }
 
+/* ================= キャラ詳細 ＆ エンドカード詳細 共通矢印 ================= */
 .nav-arrow {
-  position: fixed;        /* ★ absolute から fixed に変更して画面上に固定 */
-  top: 50%;               /* 画面の縦中央 */
+  position: fixed; /* 画面に完全固定 */
+  top: 50%;
   transform: translateY(-50%);
-  z-index: 100;           /* 前面に表示 */
+  z-index: 100;
   background: transparent;
   border: none;
-  color: #4e3b5d;         /* ★ テーマカラーの紫に変更 */
+  color: #4e3b5d; /* キャラ詳細用の文字色 */
   font-size: 3.2rem;
   font-weight: 300;
   cursor: pointer;
@@ -456,6 +391,12 @@ a { color: inherit; text-decoration: none; }
   line-height: 1;
   user-select: none;
 }
+
+/* ★ エンドカード詳細ページ内では矢印の色をベージュにする */
+.end-detail-page .nav-arrow {
+  color: var(--c-beige);
+}
+
 .nav-arrow.prev { left: 8px; }
 .nav-arrow.next { right: 8px; }
 
@@ -476,19 +417,16 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
 }
 
-/* ２. 背景のロゴアイコン（グラデーションマスク ＆ 位置引き上げ） */
 .chara-bg-icon {
   position: absolute;
-  top: 6%;                /* ★ 15% から 6% に変更し、位置を高く設定 */
+  top: 6%;
   left: 50%;
   transform: translateX(-50%);
   width: 280px;
   height: 280px;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.55;          /* グラデーションが綺麗に映える不透明度 */
-
-  /* ★ CSSマスクで icon-fff.webp の形にグラデーションを流し込む */
+  opacity: 0.55;
   -webkit-mask-image: url("images/icon-fff.webp");
   -webkit-mask-size: contain;
   -webkit-mask-repeat: no-repeat;
@@ -502,7 +440,7 @@ a { color: inherit; text-decoration: none; }
 .chara-main-img {
   position: relative;
   z-index: 2;
-  max-height: 90svh;
+  max-height: 100%;
   width: auto;
   object-fit: contain;
   object-position: bottom center;
@@ -513,14 +451,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 @keyframes charaFloatUp {
-  from {
-    opacity: 0.8;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0.8; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .vertical-quote {
@@ -536,9 +468,16 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.6;
   z-index: 10;
   max-height: 85%;
-  white-space: nowrap;        /* ★ 勝手に途中で改行（2行化）されないようにします */
+  white-space: nowrap;
   display: flex;
   gap: 12px;
+}
+
+.quote-line {
+  padding: 16px 10px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 /* 立ち絵左下の悪魔姿切り替えダイヤマーク */
@@ -549,7 +488,7 @@ a { color: inherit; text-decoration: none; }
   z-index: 15;
   background: none;
   border: none;
-  outline: none; /* ★ タップ時やフォーカス時の四角い枠線を消去 */
+  outline: none;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -557,26 +496,19 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   gap: 3px;
   cursor: pointer;
-  -webkit-tap-highlight-color: transparent; /* スマホタップ時の四角いハイライトを消去 */
+  -webkit-tap-highlight-color: transparent;
   transition: transform 0.2s ease;
 }
 
-.demon-toggle-btn:focus,
-.demon-toggle-btn:focus-visible {
-  outline: none; /* ブラウザ標準の四角いフォーカスリングを消去 */
-}
-
-/* 通常時（天使姿）のダイヤ */
 .demon-diamond-icon {
   width: 42px;
   height: 42px;
   fill: var(--c-purple);
-  stroke: transparent; /* 縁線なし */
+  stroke: transparent;
   stroke-width: 0;
-  transition: fill 0.25s ease, stroke 0.25s ease, transform 0.3s ease, filter 0.25s ease;
+  transition: fill 0.25s ease, stroke 0.25s ease, transform 0.3s ease;
 }
 
-/* TAPラベル文字 */
 .demon-toggle-label {
   font-family: var(--font-fashion);
   font-size: 0.65rem;
@@ -587,27 +519,15 @@ a { color: inherit; text-decoration: none; }
   line-height: 1;
 }
 
-/* 悪魔姿（ON状態）の時：ダイヤの縁がカラーでくっきり色づく */
 .demon-toggle-btn.is-active .demon-diamond-icon {
-  fill: #ffffff; /* 中身は白 */
-  stroke: var(--c-purple); /* ★ ダイヤの縁をテーマカラーの紫（#4e3b5d）で色づけ */
-  stroke-width: 1px;     /* 縁の太さ */
+  fill: #ffffff;
+  stroke: var(--c-purple);
+  stroke-width: 1px;
   transform: rotate(180deg);
 }
 
-.quote-line {
-  padding: 16px 10px;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-}
+.chara-info { margin-top: 1.8rem; padding: 0 8px; }
 
-.chara-info {
-  margin-top: 1.8rem;
-  padding: 0 8px;
-}
-
-/* ★ 白背景に合わせて文字色を紫(#4e3b5d)に変更 */
 .detail-chara-name {
   font-family: var(--font-fashion);
   font-size: 1.6rem;
@@ -637,7 +557,6 @@ a { color: inherit; text-decoration: none; }
   text-align: justify;
 }
 
-/* ★ ダイヤマークの色も白背景で見えるよう紫に変更 */
 .diamond-divider {
   display: flex;
   align-items: center;
@@ -659,9 +578,7 @@ a { color: inherit; text-decoration: none; }
   border-top: none;
 }
 
-.others-sec .chara-name {
-  color: var(--c-purple);
-}
+.others-sec .chara-name { color: var(--c-purple); }
 
 /* ================= エンドカード詳細 ================= */
 .end-detail-page {
@@ -700,20 +617,18 @@ a { color: inherit; text-decoration: none; }
 .end-nav-arrow.prev { left: 4px; }
 .end-nav-arrow.next { right: 4px; }
 
-.end-detail-content {
-  padding: 0 32px;
-}
+.end-detail-content { padding: 0 32px; }
 
 .end-title {
   font-family: var(--font-title);
-  font-size: 1.5rem;
+  font-size: clamp(1.1rem, 4.2vw, 1.5rem);
   font-weight: 500;
   text-align: center;
   margin-bottom: 2rem;
   color: var(--c-beige);
   letter-spacing: 0.08em;
   line-height: 1.4;
-  white-space: pre-wrap;
+  white-space: pre-line;
   word-break: keep-all;
   overflow-wrap: break-word;
 }
@@ -757,20 +672,15 @@ a { color: inherit; text-decoration: none; }
   border-color: var(--c-lavender);
 }
 
-/* トップ・キャラ詳細・エンド詳細の下部余白を一括で調整 */
-.top-body,
-.detail-page,
-.end-detail-page {
-  padding-bottom: 4rem; /* ★ フッター線までの距離感をしっかりキープ */
-}
+.top-body, .detail-page, .end-detail-page { padding-bottom: 4rem; }
 
 /* ================= フッター ================= */
 .site-footer {
   text-align: center;
   padding: 40px 16px;
-  margin-top: 0;              /* ★ 白い隙間の原因だった外側余白をリセット */
+  margin-top: 0;
   border-top: 1.5px solid var(--c-lavender);
-  background-color: #ffffff; /* ★ フッターの色は白で固定 */
+  background-color: #ffffff;
 }
 
 .credit { 
@@ -783,3 +693,135 @@ a { color: inherit; text-decoration: none; }
 
 .twitter-btn { display: inline-block; width: 36px; height: 36px; }
 .twitter-btn img { width: 100%; height: 100%; object-fit: contain; }
+
+/* ================= PC用 レスポンシブ表示設定 ================= */
+@media (min-width: 768px) {
+  .fixed-header {
+    height: 88px;
+    padding: 0 40px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(212, 195, 221, 0.6);
+    box-shadow: 0 4px 20px rgba(78, 59, 93, 0.06);
+  }
+
+  .header-logo img { height: 76px; }
+  .menu-btn { display: none !important; }
+  .header-nav { display: block; }
+
+  .header-nav-list {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .header-nav-link {
+    font-family: var(--font-fashion);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--c-purple);
+    letter-spacing: 0.08em;
+    padding: 6px 4px;
+    position: relative;
+    transition: color 0.25s ease;
+  }
+
+  .header-nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--c-purple);
+    transition: width 0.25s ease, left 0.25s ease;
+  }
+
+  .header-nav-link:hover::after {
+    width: 100%;
+    left: 0;
+  }
+
+  /* キービジュアル（ご提示コードと全く同じ設定） */
+  .top-hero {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+  }
+
+  .top-hero > img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .top-hero::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 25%;
+    background: linear-gradient(
+      to bottom, 
+      rgba(255, 255, 255, 0) 0%, 
+      rgba(255, 255, 255, 0.8) 75%, 
+      #ffffff 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-logo-wrap {
+    position: absolute;
+    top: auto;
+    bottom: 8%;
+    left: 50%;
+    width: 90%;
+    max-width: 480px;
+    z-index: 10;
+    transform: translate(-50%, 20px);
+  }
+
+  .hero-logo-wrap.is-visible {
+    transform: translate(-50%, 0);
+  }
+
+  
+    .detail-page { padding-top: 110px; }
+
+    .end-detail-page {
+      padding-top: 120px;
+    }
+  
+    .stage {
+      height: calc(100vh - 200px);
+      max-height: 680px;
+    }
+  
+    /* ★ PC表示時も absolute にせず fixed で画面中央に完全固定 */
+    .nav-arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 3.8rem;
+      opacity: 0.7;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+  
+    .nav-arrow:hover {
+      opacity: 1;
+      transform: translateY(-50%) scale(1.1);
+    }
+  
+    /* 中央コンテンツ横の固定位置計算 */
+    .detail-page .nav-arrow.prev { left: calc(50% - 320px); }
+    .detail-page .nav-arrow.next { right: calc(50% - 320px); }
+  
+    .end-detail-page .nav-arrow.prev { left: calc(50% - 350px); }
+    .end-detail-page .nav-arrow.next { right: calc(50% - 350px); }
+  }

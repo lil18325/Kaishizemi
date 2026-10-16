@@ -1,139 +1,139 @@
 /* ============================================================
-   データ定義
+   データ定義（ネタバレあり版）
    ============================================================ */
 
-   const CHARAS = [
-    {
-      id: "lion",
-      name: "リオン・アルヴェイン",
-      shortName: "リオン",
-      kana: "Lion Alvein",
-      fullImg: "images/Lion1.webp",
-      bgTop: "#d4d1ce",
-      bgBottom: "#6d6c8f",
-      quoteBg: "#575651",
-      thumbZoom: 550,  // ① 大きさ（%）（数値が大きいほど拡大）
-      thumbX: -230,     // ② 左右（%）(初期値は-50、小さくすると右に動く)
-      thumbY: -35,     // ③ 上下（%）(初期値は-20、小さくすると上に動く)
-      quote: "「……よくやった。あとは俺が引き受ける」",
-      desc: "天界入境審査庁で働いている幹部天使。<br>新人の監視役。反乱天使たちの頼れるリーダー。無愛想で真面目な人。第一印象は厳しい人に見えるが、実際は多くの天使に慕われている。"
-    },
-    {
-      id: "robert",
-      name: "ローベルト・ヴィンター",
-      shortName: "ローベルト",
-      kana: "Robert Winter",
-      fullImg: "images/Robert1.webp",
-      bgTop: "#d5cbca",
+// 1. キャラクターデータ
+const CHARAS = [
+  {
+    id: "lion",
+    name: "リオン・アルヴェイン",
+    shortName: "リオン",
+    kana: "Lion Alvein",
+    fullImg: "images/Lion1.webp",
+    bgTop: "#d4d1ce",
+    bgBottom: "#6d6c8f",
+    quoteBg: "#575651",
+    thumbZoom: 550,
+    thumbX: -230,
+    thumbY: -35,
+    quote: "「……よくやった。あとは俺が引き受ける」",
+    desc: "天界入境審査庁で働いている幹部天使。<br>新人の監視役。反乱天使たちの頼れるリーダー。無愛想で真面目な人。第一印象は厳しい人に見えるが、実際は多くの天使に慕われている。"
+  },
+  {
+    id: "robert",
+    name: "ローベルト・ヴィンター",
+    shortName: "ローベルト",
+    kana: "Robert Winter",
+    fullImg: "images/Robert1.webp",
+    bgTop: "#d5cbca",
     bgBottom: "#734967",
     quoteBg: "#b14447b3",
-      thumbZoom: 460,  // ① 大きさ（%）（数値が大きいほど拡大）
-      thumbX: -165,     // ② 左右（%）
-      thumbY: -63,     // ③ 上下（%）
-      quote: "「皆で頑張るぞ！より良い世界のために！」",
-      desc: "天界入境審査庁の幹部天使。<br>ハッピー計画に賛同している。位の高い貴族家出身。まっすぐで純粋な思想を持つ。審査庁の顔役で有名人。"
-    },
-    {
-      id: "nicolo",
-      name: "ニコロ・アレッシオ",
-      shortName: "ニコロ",
-      kana: "Nicolo Alessio",
-      fullImg: "images/Nicolo1.webp",
-      bgTop: "#e9e4d9",
+    thumbZoom: 460,
+    thumbX: -165,
+    thumbY: -63,
+    quote: "「皆で頑張るぞ！より良い世界のために！」",
+    desc: "天界入境審査庁の幹部天使。<br>ハッピー計画に賛同している。位の高い貴族家出身。まっすぐで純粋な思想を持つ。審査庁の顔役で有名人。"
+  },
+  {
+    id: "nicolo",
+    name: "ニコロ・アレッシオ",
+    shortName: "ニコロ",
+    kana: "Nicolo Alessio",
+    fullImg: "images/Nicolo1.webp",
+    bgTop: "#e9e4d9",
     bgBottom: "#777495",
     quoteBg: "#87856b",
-      thumbZoom: 330,  // ① 大きさ（%）（数値が大きいほど拡大）
-      thumbX: -110,     // ② 左右（%）
-      thumbY: -40,     // ③ 上下（%）
-      quote: "「ありがとう、みんなのおかげで状況が動きました！」",
-      desc: "天界入境審査庁で働いている先輩審査官。<br>ハッピー計画に反対している反乱天使。元気いっぱいな頑張り屋。人間や他の天使たちが大好き。"
-    },
-    {
-      id: "komugi",
-      name: "コムギ・アマハ",
-      shortName: "コムギ",
-      kana: "Komugi Amaha",
-      fullImg: "images/Komugi1.webp",
-      bgTop: "#c9d7ce",
+    thumbZoom: 330,
+    thumbX: -110,
+    thumbY: -40,
+    quote: "「ありがとう、みんなのおかげで状況が動きました！」",
+    desc: "天界入境審査庁で働いている先輩審査官。<br>ハッピー計画に反対している反乱天使。元気いっぱいな頑張り屋。人間や他の天使たちが大好き。"
+  },
+  {
+    id: "komugi",
+    name: "コムギ・アマハ",
+    shortName: "コムギ",
+    kana: "Komugi Amaha",
+    fullImg: "images/Komugi1.webp",
+    bgTop: "#c9d7ce",
     bgBottom: "#66708f",
     quoteBg: "#3b6755",
-      thumbZoom: 280,  // ① 大きさ（%）（数値が大きいほど拡大）
-      thumbX: -88,     // ② 左右（%）
-      thumbY: -30,     // ③ 上下（%）
-      quote: "「幸せいっぱい、夢いっぱい、最高で〜す！」",
-      desc: "HALO inc.の社員。仕事で人間界に降りていた。<br>いつもニコニコ、ワタワタ、能天気。ごく一般的な天使である。よく何も無いところで転んでいる。"
-    },
-    {
-      id: "shade",
-      name: "シェイド・グレイ",
-      shortName: "シェイド",
-      kana: "Shade Grey",
-      fullImg: "images/Shade1.webp",
-      bgTop: "#bacde9",
+    thumbZoom: 280,
+    thumbX: -88,
+    thumbY: -30,
+    quote: "「幸せいっぱい、夢いっぱい、最高で〜す！」",
+    desc: "HALO inc.の社員。仕事で人間界に降りていた。<br>いつもニコニコ、ワタワタ、能天気。ごく一般的な天使である。よく何も無いところで転んでいる。"
+  },
+  {
+    id: "shade",
+    name: "シェイド・グレイ",
+    shortName: "シェイド",
+    kana: "Shade Grey",
+    fullImg: "images/Shade1.webp",
+    bgTop: "#bacde9",
     bgBottom: "#5f6aa1",
     quoteBg: "#192f5e",
-      thumbZoom: 425,  // ① 大きさ（%）（数値が大きいほど拡大）
-      thumbX: -90,     // ② 左右（%）
-      thumbY: -45,     // ③ 上下（%）
-      quote: "「今日は定時で帰れそうだ……」",
-      desc: "しらはカンパニーの社員。実験のため人間界へ出張していた。<br>社畜。常にエナドリを携帯しており、持っていないと落ち着かない。そのため常に寝不足状態。"
-    },
-    {
-      id: "beryl",
-      name: "ベリル・フィンスター",
-      shortName: "ベリル",
-      kana: "Beryl Finster",
-      fullImg: "images/Beryl2.webp",
-      demonImg: "images/Beryl1.webp",
-      bgTop: "#efcfe2",
+    thumbZoom: 425,
+    thumbX: -90,
+    thumbY: -45,
+    quote: "「今日は定時で帰れそうだ……」",
+    desc: "しらはカンパニーの社員。実験のため人間界へ出張していた。<br>社畜。常にエナドリを携帯しており、持っていないと落ち着かない。そのため常に寝不足状態。"
+  },
+  {
+    id: "beryl",
+    name: "ベリル・フィンスター",
+    shortName: "ベリル",
+    kana: "Beryl Finster",
+    fullImg: "images/Beryl2.webp",   /* デフォルト：悪魔姿 */
+    demonImg: "images/Beryl1.webp",  /* TAP切替：天使姿 */
+    bgTop: "#efcfe2",
     bgBottom: "#7e679c",
     quoteBg: "#ce2282",
-      thumbZoom: 380,  // ① 大きさ（%）（数値が大きいほど拡大）
-      thumbX: -143,     // ② 左右（%）
-      thumbY: -40,     // ③ 上下（%）
-      quote: "「きゃはは！天界の窓という窓に指紋つけてやる！」",
-      desc: "天使に擬態した悪魔。計画を壊すために乗り込んできた。<br>感情が表に出やすく、素直で自己中な悪魔らしい子。食べることが好きで、特に甘い物を求めている。"
-    },
-    {
-      id: "orphes",
-      name: "オルフェス・ローウェル",
-      shortName: "オルフェス",
-      kana: "Orphes Lowell",
-      fullImg: "images/Orphes2.webp",
-      demonImg: "images/Orphes1.webp",
-      bgTop: "#b1b7ce",
+    thumbZoom: 380,
+    thumbX: -143,
+    thumbY: -40,
+    quote: "「きゃはは！天界の窓という窓に指紋つけてやる！」",
+    desc: "天使に擬態した悪魔。計画を壊すために乗り込んできた。<br>感情が表に出やすく、素直で自己中な悪魔らしい子。食べることが好きで、特に甘い物を求めている。"
+  },
+  {
+    id: "orphes",
+    name: "オルフェス・ローウェル",
+    shortName: "オルフェス",
+    kana: "Orphes Lowell",
+    fullImg: "images/Orphes2.webp",  /* デフォルト：悪魔姿 */
+    demonImg: "images/Orphes1.webp", /* TAP切替：天使姿 */
+    bgTop: "#b1b7ce",
     bgBottom: "#5c6191",
     quoteBg: "#43599c",
-      thumbZoom: 460,  // ① 大きさ（%）（数値が大きいほど拡大）
-      thumbX: -170,     // ② 左右（%）
-      thumbY: -45,     // ③ 上下（%）
-      quote: "「うん、みんなかわいいね。楽しい日になりそうだ」",
-      desc: "天使に擬態した悪魔。計画を邪魔するために乗り込んできた。<br>悪魔にしては珍しく、おっとりとしていて優しい博愛主義。普段から人間を魅了してはエネルギーを得ている。"
-    },
-    {
-      id: "sophia",
-      name: "ソフィア・リクレア",
-      shortName: "ソフィア",
-      kana: "Sophia Ricrea",
-      fullImg: "images/Sophia1.webp",
-      bgTop: "#d1bad9",
+    thumbZoom: 460,
+    thumbX: -170,
+    thumbY: -45,
+    quote: "「うん、みんなかわいいね。楽しい日になりそうだ」",
+    desc: "天使に擬態した悪魔。計画を邪魔するために乗り込んできた。<br>悪魔にしては珍しく、おっとりとしていて優しい博愛主義。普段から人間を魅了してはエネルギーを得ている。"
+  },
+  {
+    id: "sophia",
+    name: "ソフィア・リクレア",
+    shortName: "ソフィア",
+    kana: "Sophia Ricrea",
+    fullImg: "images/Sophia1.webp",
+    bgTop: "#d1bad9",
     bgBottom: "#6e5f98",
     quoteBg: "#733e7b",
-      thumbZoom: 330,  // ① 大きさ（%）（数値が大きいほど拡大）
-      thumbX: -100,     // ② 左右（%）
-      thumbY: -40,     // ③ 上下（%）
-      quote: "「この先も悔いのない選択を！」",
-      desc: "計画に反対する反乱天使。反乱の意思を見抜かれ、追放されていた。<br>明るく人懐っこく、好奇心旺盛。頭の回転が速く、知恵と言葉を武器に困難へ立ち向かう。"
-    }
-  ];
-  
-  /* data.js の一番下付近 */
+    thumbZoom: 330,
+    thumbX: -100,
+    thumbY: -40,
+    quote: "「この先も悔いのない選択を！」",
+    desc: "計画に反対する反乱天使。反乱の意思を見抜かれ、追放されていた。<br>明るく人懐っこく、好奇心旺盛。頭の回転が速く、知恵と言葉を武器に困難へ立ち向かう。"
+  }
+];
 
+// 2. エンドカードデータ（全8種）
 const END_CARDS = [
   {
     id: 1,
-    title: "END 1「静寂の世界」", // エンドのタイトル
-    img: "images/endcard-01.webp",        // 画像のファイル名
+    title: "END 1「静寂の世界」",
+    img: "images/endcard-01.webp",
     text: `ローベルトは実験の成功を高らかに宣言した。
 「諸君、良くやった！これで天界の平和は永劫のものとなるだろう！！」
 「みんな幸せだね～コムギも頑張って良かったです！」
@@ -167,12 +167,11 @@ const END_CARDS = [
 そう、その発想に辿り着いてしまったのだ。
 そこから魔界では人間の感情を増やす計画を開始した。まだ実験段階ではあるが、人間界では喜怒哀楽の感情がいつもより10倍昂ぶっている人間ばかりだ。
 そんなこんなで人間界は今日も騒がしい。
-「あ～うめ～～!やっぱ感情ってやつが1番だな!」`
+「あ～うめ～～!やっぱ感情ってやつが1番だな!`
   },
   {
     id: 3,
-    title: `END 3
-「魅了!デモ行進!」`,
+    title: `END 3「魅了!デモ行進!」`,
     img: "images/endcard-03.webp",
     text: `無事バレずに天界へと入り込んだ悪魔“オルフェス・ローウェル”
 魔界に住む者のエネルギーとなる人間の感情を奪う、『ハッピー計画』を止めるべく天界を彷徨っていた。
@@ -285,3 +284,4 @@ const END_CARDS = [
 空は少しだけ明るくなっていた。`
   }
 ];
+
