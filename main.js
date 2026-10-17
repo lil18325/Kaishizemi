@@ -189,25 +189,26 @@
      }
    }, { passive: true });
    
-   /* ---------- 6. エンドカード詳細の描画 ---------- */
-   let currentEndIdx = 0;
-   
-   function renderEndDetail(endId) {
-     const idx = END_CARDS.findIndex(item => item.id === Number(endId));
-     currentEndIdx = idx >= 0 ? idx : 0;
-     const e = END_CARDS[currentEndIdx];
-   
-     const container = $("end-detail-content");
-   
-     container.innerHTML = `
-       <h2 class="end-title">${e.title}</h2>
-       <p class="end-text">${e.text}</p>
-       <img class="end-img" src="${e.img}" alt="${e.title}" onerror="this.style.display='none'">
-     `;
-   
-     buildEndCardList("others-end-grid");
-   }
-   
+/* ---------- 6. エンドカード詳細の描画 ---------- */
+let currentEndIdx = 0;
+
+function renderEndDetail(endId) {
+  const idx = END_CARDS.findIndex(item => item.id === Number(endId));
+  currentEndIdx = idx >= 0 ? idx : 0;
+  const e = END_CARDS[currentEndIdx];
+
+  const container = $("end-detail-content");
+
+  container.innerHTML = `
+    <h2 class="end-title">${e.title}</h2>
+    ${e.condition ? `<p class="end-condition">条件：${e.condition}</p>` : ''}
+    <p class="end-text">${e.text}</p>
+    <img class="end-img" src="${e.img}" alt="${e.title}" onerror="this.style.display='none'">
+  `;
+
+  buildEndCardList("others-end-grid");
+}
+
    function stepEndCard(dir) {
      const M = END_CARDS.length;
      const nextIdx = (currentEndIdx + dir + M) % M;
